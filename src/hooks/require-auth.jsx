@@ -3,27 +3,30 @@
 // import { useSelector } from "react-redux";
 // import { selectCurrentToken } from "../../redux/slices/authSlice";
 
+import { Navigate, Outlet } from "react-router-dom";
+
 export function RequireAuth() {
-  //   const navigate = useNavigate();
-  //   // const token = useSelector(selectCurrentToken);
-  //   const location = useLocation();
+  const getCookieValue = (name) => {
+    const cookieString = document.cookie;
+    const cookies = cookieString.split(";");
 
-  //   const token = window.localStorage.getItem("auth_token");
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.startsWith(name + "=")) {
+        return cookie.substring(name.length + 1);
+      }
+    }
 
-  //   // useEffect( () =>{
-  //   // 	const token= window.localStorage.getItem('auth_token')
-  //   // 	if(!token){
-  //   // 		navigate('/')
-  //   // 	}
-  //   // },[])
+    return null; // Cookie not found
+  };
 
-  //   return token ? (
-  //     <Outlet />
-  //   ) : (
-  //     <Navigate to="auth/login" state={{ from: location }} replace />
-  //   );
+  const cookieValue = getCookieValue("session");
 
-  return true;
+  return cookieValue ? (
+    <Outlet />
+  ) : (
+    <Navigate to="auth/login" state={{ from: location.pathname }} replace />
+  );
 }
 
 // export function RequireSumperAdmin() {

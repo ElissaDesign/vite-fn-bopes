@@ -3,6 +3,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Layout from "../components/layout";
 import React, { Suspense } from "react";
 import Loader from "../components/css-loader/loader";
+import { Dashboard } from "../private-pages/dashboard";
+import { RequireAuth } from "../hooks/require-auth";
 
 const LandingPage = React.lazy(() => import("../public-pages/landing-page"));
 const AboutPage = React.lazy(() => import("../public-pages/about-page"));
@@ -19,6 +21,9 @@ export const AppComponents = () => {
             <Route path="/about" element={<AboutPage />} />
             <Route path="/auth/login" element={<SigninPage />} />
             <Route path="/auth/register" element={<SignupPage />} />
+          </Route>
+          <Route element={<RequireAuth />}>
+            <Route path="/dashboard" element={<Dashboard />} />
           </Route>
         </Routes>
       </Suspense>
