@@ -1,10 +1,3 @@
-import Navbar from "../components/navBar";
-
-export const LandingPage = () => {
-  return (
-    <div>
-      <Navbar />
-      LandingPage
-    </div>
-  );
-};
+export default function LandingPage() {
+  return <div>LandingPage</div>;
+}
