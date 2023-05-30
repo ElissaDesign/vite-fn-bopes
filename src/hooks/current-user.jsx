@@ -8,7 +8,7 @@ import {
 export default function CurrentUser() {
   const dispatch = useDispatch();
   const User = useSelector((state) => state.currentuser);
-  const { data } = useCurrentUserQuery();
+  const data = useCurrentUserQuery();
 
   console.log("Current user", data);
 
