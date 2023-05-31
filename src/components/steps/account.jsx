@@ -58,13 +58,13 @@ export default function Account() {
                 name="code"
                 onChange={handleChange}
                 value={userData["code"] || ""}
-                className="w-full p-1 px-2 text-gray outline-none font-light"
+                className="w-full p-1 px-2 text-gray-300 outline-none font-light"
               >
                 <option value="+250">+250</option>
                 <option value="+457">+457</option>
               </select>
             </div>
-            <div className="border-b border-gray-100 w-full flex-1">
+            <div className="border-b border-gray-200 w-full flex-1">
               <input
                 onChange={handleChange}
                 value={userData["contact"] || ""}

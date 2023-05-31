@@ -11,14 +11,14 @@ export default function Company() {
   return (
     <div>
       <div className="flex flex-col justify-center items-center">
-        <h1 className=" text-xl font-bold text-gray">About your company</h1>
+        <h1 className=" text-xl font-bold text-gray-300">About your company</h1>
         <p className="text-sm font-light my-2">
           We’ll use this info to personalize your experience
         </p>
       </div>
 
       <div className="mx-2 w-full flex-1">
-        <div className="my-2 flex items-center border-b border-gray_white bg-white p-1">
+        <div className="my-2 flex items-center border-b border-gray-200 bg-white p-1">
           <BiBuildingHouse />
           <input
             onChange={handleChange}
@@ -26,17 +26,17 @@ export default function Company() {
             name="companyName"
             type="text"
             placeholder="Company name"
-            className="w-full appearance-none p-1 px-2 text-gray outline-none font-light"
+            className="w-full appearance-none p-1 px-2 text-gray-300 outline-none font-light"
           />
         </div>
       </div>
 
-      <div className="border-b border-gray_white w-full my-8">
+      <div className="border-b border-gray-200 w-full my-8">
         <select
           name="industry"
           onChange={handleChange}
           value={userData["industry"] || ""}
-          className="w-full p-1 px-2 text-gray outline-none font-light"
+          className="w-full p-1 px-2 text-gray-300 outline-none font-light"
         >
           <option value="">Company industry?</option>
           <option value="Agriculture">Agriculture</option>
@@ -49,19 +49,19 @@ export default function Company() {
       </div>
 
       <div className="flex flex-col justify-center">
-        <h1 className=" text-xl font-bold text-gray">
+        <h1 className=" text-xl font-bold text-gray-200">
           How many peaple in your company will use Wsimplify?
         </h1>
         <p className="text-sm font-light my-2">
           This is just for info. You can invite users at any time.
         </p>
 
-        <div className="border-b border-gray_white w-full my-8">
+        <div className="border-b border-gray-200 w-full my-8">
           <select
             name="workers"
             onChange={handleChange}
             value={userData["workers"] || ""}
-            className="w-full p-1 px-2 text-gray outline-none font-light"
+            className="w-full p-1 px-2 text-gray-200 outline-none font-light"
           >
             <option value="1">1</option>
             <option value="2-5">2-5</option>

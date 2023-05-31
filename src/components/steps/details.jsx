@@ -10,7 +10,7 @@ export default function Details() {
   return (
     <div>
       <div className="flex flex-col justify-center items-center">
-        <h1 className=" text-xl font-bold text-gray">About you</h1>
+        <h1 className=" text-xl font-bold text-gray-300">About you</h1>
         <p className="text-sm font-light my-2">
           We’ll use this info to personalize your experience
         </p>
@@ -28,7 +28,6 @@ export default function Details() {
             </option>
             <option value="Admin">Admin</option>
             <option value="Manager">Manager</option>
-            <option value="Marketer">Marketer</option>
           </select>
         </div>
 
@@ -37,7 +36,7 @@ export default function Details() {
             name="experience"
             onChange={handleChange}
             value={userData["experience"] || ""}
-            className="w-full p-1 px-2 text-gray outline-none font-light"
+            className="w-full p-1 px-2 text-gray-300 outline-none font-light"
           >
             <option value="">What is your experience with sales tools?</option>
             <option value="I haven't used any sales tools before">

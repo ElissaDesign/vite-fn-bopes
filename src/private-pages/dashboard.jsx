@@ -10,29 +10,26 @@ import { useCurrentUserQuery } from "../redux/api/apiSlice";
 import Startup from "./startup";
 
 export default function Dashboard() {
-  const { data, isSuccess, isError, isLoading } = useCurrentUserQuery();
   // if(isLoading){
   //   return <div>Loading...</div>
   // }
-  if (isSuccess && data?.currentUser.organizationId) {
-    return (
-      <>
-        <CheckRole roles={["superadmin"]}>
-          <SupAdDashboard />
-        </CheckRole>
-        <CheckRole roles={["boss"]}>
-          <AdminDashboard />
-        </CheckRole>
-        <CheckRole roles={["admin"]}>
-          <ManagerDashboard />
-        </CheckRole>
-        <CheckRole roles={["user"]}>
-          <EmployeeDashboard />
-        </CheckRole>
-        <CheckRole>
-          <ExpireDashboard />
-        </CheckRole>
-      </>
-    );
-  } else if (isSuccess && !data?.currentUser.organizationId) return <Startup />;
+  return (
+    <>
+      <CheckRole roles={["superadmin"]}>
+        <SupAdDashboard />
+      </CheckRole>
+      <CheckRole roles={["admin"]}>
+        <AdminDashboard />
+      </CheckRole>
+      <CheckRole roles={["manager"]}>
+        <ManagerDashboard />
+      </CheckRole>
+      <CheckRole roles={["user"]}>
+        <EmployeeDashboard />
+      </CheckRole>
+      <CheckRole>
+        <ExpireDashboard />
+      </CheckRole>
+    </>
+  );
 }

@@ -6,7 +6,7 @@ export default function Final() {
           <p className="text-center text-4xl mb-6 mt-[-40px]"> 🎉</p>
           Congratulations!
         </div>
-        <div className="text-base font-regular text-gray my-6">
+        <div className="text-base font-regular text-gray-300 my-6">
           Your account has been created.
         </div>
         <a className="mt-10" href="dashboard">
