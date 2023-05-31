@@ -98,7 +98,7 @@ export default function Leftbar() {
         ];
 
   return (
-    <div className=" mt-20">
+    <div className="mt-20">
       <div
         className={`bg-blue h-screen p-5 pt-8 ${
           open ? "w-72" : "w-20"

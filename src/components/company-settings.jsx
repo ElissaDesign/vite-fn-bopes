@@ -1,5 +1,3 @@
-/* eslint-disable no-constant-condition */
-/* eslint-disable react/no-unknown-property */
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { BiLogIn } from "react-icons/bi";
@@ -21,15 +19,15 @@ import { AiOutlineSetting, AiFillMessage } from "react-icons/ai";
 import { IoIosBulb } from "react-icons/io";
 import { useNavigate } from "react-router";
 
-export default function Topbar() {
+function Topbar() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  //   const logout = (e) => {
-  //     e.preventDefault();
-  //     dispatch(logOut());
-  //     navigate("/");
-  //   };
+  const logout = (e) => {
+    e.preventDefault();
+    // dispatch(logOut());
+    // navigate("/");
+  };
 
   const role = "admin";
 
@@ -77,10 +75,7 @@ export default function Topbar() {
 
           <Popover placement="top-start">
             <PopoverTrigger>
-              <div
-                className="w-8 h-8 bg-gray-200 rounded-full flex justify-center items-center text-white hover:bg-gray-200 hover:text-blue
-               transition-all duration-300 cursor-pointer"
-              >
+              <div className="w-8 h-8 bg-grey-light rounded-full flex justify-center items-center text-white hover:bg-grey-white hover:text-primary transition-all duration-300 cursor-pointer">
                 D
               </div>
             </PopoverTrigger>
@@ -129,3 +124,5 @@ export default function Topbar() {
     </div>
   );
 }
+
+export default Topbar;
