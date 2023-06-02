@@ -41,6 +41,12 @@ export default function Leftbar() {
             icon: <AiFillMessage />,
           },
           {
+            title: "Peaple ",
+            src: "/dashboard/peaple",
+            gap: true,
+            icon: <AiFillMessage />,
+          },
+          {
             title: "Reports",
             src: "/dashboard/reports",
             icon: <IoDocumentTextOutline />,
@@ -99,12 +105,20 @@ export default function Leftbar() {
 
   return (
     <div className="mt-20">
+      {/* <div className=" bg-blue absolute top-7 ">
+        <MdOutlineMenuOpen
+          className={`text-2xl text-gray-700 mr-2 cursor-pointer ${
+            !open && "rotate-180"
+          }`}
+          onClick={() => setOpen(!open)}
+        />
+      </div> */}
       <div
-        className={`bg-blue h-screen p-5 pt-8 ${
-          open ? "w-72" : "w-20"
+        className={`bg-blue h-screen md:p-5 pt-8 ${
+          open ? "w-72" : "md:w-20 w-0"
         } relative duration-300`}
       >
-        <div className=" absolute top-7 right-[-44px]">
+        <div className="absolute top-7 right-[-44px]">
           <MdOutlineMenuOpen
             className={`text-2xl text-gray-700 mr-2 cursor-pointer ${
               !open && "rotate-180"
@@ -123,7 +137,7 @@ export default function Leftbar() {
           </h1>
         </div>
 
-        <ul className="pt-4">
+        <ul className={`pt-4 ${open ? "block" : "hidden md:block"}`}>
           {Menus.map((menu, index) => (
             <div key={menu.title}>
               <NavLink to={menu.src}>

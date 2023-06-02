@@ -16,6 +16,13 @@ export const apiSlice = createApi({
         body: user,
       }),
     }),
+    inviteUser: builder.mutation({
+      query: (user) => ({
+        url: "/users/invite",
+        method: "POST",
+        body: user,
+      }),
+    }),
     userLogin: builder.mutation({
       query: (user) => ({
         url: "/auth/signin",
@@ -25,6 +32,9 @@ export const apiSlice = createApi({
     }),
     currentUser: builder.query({
       query: () => "/auth/currentuser",
+    }),
+    getUsers: builder.query({
+      query: () => "/users",
     }),
 
     // Organization
@@ -66,6 +76,8 @@ export const {
   useUserRegisterMutation,
   useUserLoginMutation,
   useCurrentUserQuery,
+  useInviteUserMutation,
+  useGetUsersQuery,
   // Organization
   useGetOrganizationsQuery,
   useGetOrganizationQuery,

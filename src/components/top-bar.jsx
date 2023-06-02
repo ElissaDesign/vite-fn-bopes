@@ -35,13 +35,13 @@ export default function Topbar() {
 
   return (
     <div>
-      <div className="fixed top-0 left-0 z-10 w-full shadow h-20 flex-1 flex items-center justify-between bg-white">
+      <div className="fixed top-0 left-0 z-10 w-full shadow h-14 md:h-20 flex-1 flex flex-row items-center justify-between bg-white">
         <div className="pl-12 flex items-center">Logo</div>
 
         <div className="mr-12 flex items-center">
-          <div className="mr-24 flex items-center">
-            <AiFillMessage className="text-2xl mr-4  text-grey-light hover:bg-grey-white hover:p-2 hover:rounded-full transition-all duration-300 cursor-pointer" />
-            <Center height="50px">
+          <div className=" md:mr-24 flex flex-row items-center">
+            <AiFillMessage className="text-2xl mr-4  text-gray-300 hover:bg-gray-100 hover:p-2 hover:rounded-full transition-all duration-300 cursor-pointer" />
+            <Center height="50px" className="">
               <Divider orientation="vertical" className="mx-4" />
             </Center>
 
@@ -50,7 +50,7 @@ export default function Topbar() {
             <Box className="relative">
               <Popover placement="top-start">
                 <PopoverTrigger>
-                  <MdNotifications className=" z-10 text-2xl mr-4 text-grey-light hover:bg-grey-white hover:p-2 hover:rounded-full transition-all duration-300 cursor-pointer" />
+                  <MdNotifications className=" z-10 text-2xl mr-4 text-gray-300 hover:bg-grey-white hover:p-2 hover:rounded-full transition-all duration-300 cursor-pointer" />
                 </PopoverTrigger>
                 <PopoverContent className="mt-10" w="200px">
                   <PopoverHeader fontWeight="semibold">
@@ -68,11 +68,11 @@ export default function Topbar() {
 
             {/* Ending of Notifications */}
 
-            <Center height="50px">
+            <Center height="50px" className="hidden md:block">
               <Divider orientation="vertical" className="mx-4" />
             </Center>
 
-            <IoIosBulb className="text-2xl mr-4 text-grey-light hover:bg-grey-white hover:p-2 hover:rounded-full transition-all duration-300 cursor-pointer" />
+            <IoIosBulb className="hidden md:block text-2xl mr-4 text-gray-300 hover:bg-gray-100 hover:p-2 hover:rounded-full transition-all duration-300 cursor-pointer" />
           </div>
 
           <Popover placement="top-start">
