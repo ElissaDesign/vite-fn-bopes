@@ -16,6 +16,13 @@ export const apiSlice = createApi({
         body: user,
       }),
     }),
+    inviteUser: builder.mutation({
+      query: (user) => ({
+        url: "/users/invite",
+        method: "POST",
+        body: user,
+      }),
+    }),
     userLogin: builder.mutation({
       query: (user) => ({
         url: "/auth/signin",
@@ -26,10 +33,56 @@ export const apiSlice = createApi({
     currentUser: builder.query({
       query: () => "/auth/currentuser",
     }),
+    getUsers: builder.query({
+      query: () => "/users",
+    }),
+
+    // Organization
+    getOrganizations: builder.query({
+      query: () => "/organizations",
+    }),
+    getOrganization: builder.query({
+      query: (id) => `organizations/${id}`,
+    }),
+    createOrganization: builder.mutation({
+      query: (organization) => ({
+        url: "/organizations",
+        method: "POST",
+        body: organization,
+      }),
+    }),
+    deleteOrganization: builder.mutation({
+      query: (id) => ({
+        url: `organization/${id}`,
+        method: "DELETE",
+      }),
+    }),
+    updateOrganization: builder.mutation({
+      query: (organization) => ({
+        url: `organization`,
+        method: "PATCH",
+        body: organization,
+      }),
+    }),
+    assignOrganization: builder.mutation({
+      query: ({ userId, orgId }) => ({
+        url: `/users/${userId}/${orgId}`,
+        method: "PATCH",
+      }),
+    }),
   }),
 });
 export const {
   useUserRegisterMutation,
   useUserLoginMutation,
   useCurrentUserQuery,
+  useInviteUserMutation,
+  useGetUsersQuery,
+  // Organization
+  useGetOrganizationsQuery,
+  useGetOrganizationQuery,
+  useCreateOrganizationMutation,
+  useDeleteOrganizationMutation,
+  useUpdateOrganizationMutation,
+  useAssignOrganizationMutation,
 } = apiSlice;
