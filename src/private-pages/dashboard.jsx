@@ -6,13 +6,8 @@ import EmployeeDashboard from "./employee-dasboard";
 import ExpireDashboard from "./token-expired";
 // import AccountantDashboard from "./accountantDashboard";
 // import EmployeeDashboard from "./employeeDashboard";
-import { useCurrentUserQuery } from "../redux/api/apiSlice";
-import Startup from "./startup";
 
 export default function Dashboard() {
-  // if(isLoading){
-  //   return <div>Loading...</div>
-  // }
   return (
     <>
       <CheckRole roles={["superadmin"]}>
