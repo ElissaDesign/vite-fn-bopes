@@ -25,6 +25,8 @@ export default function InviteUser() {
   const [phone, setPhone] = useState("");
   const [role, setrole] = useState("");
 
+  const Role = localStorage.getItem("role");
+
   const RegisterMember = async (e) => {
     e.preventDefault();
 
@@ -94,9 +96,18 @@ export default function InviteUser() {
               defaultValue={role}
               onBlur={(e) => setrole(e.target.value)}
             >
-              <option value="manager">Manager</option>
-              <option value="accountant">Accountant</option>
-              <option value="user">Employee</option>
+              {Role === "superadmin" ? (
+                <>
+                  <option value="admin">Admin</option>
+                  <option value="manager">Manager</option>
+                </>
+              ) : (
+                <>
+                  <option value="manager">Manager</option>
+                  <option value="accountant">Accountant</option>
+                  <option value="user">Employee</option>
+                </>
+              )}
             </Select>
             <br />
           </div>

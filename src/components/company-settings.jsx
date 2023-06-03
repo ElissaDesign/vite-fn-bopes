@@ -1,4 +1,3 @@
-import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { BiLogIn } from "react-icons/bi";
 import { MdNotifications } from "react-icons/md";
@@ -17,18 +16,8 @@ import {
 import { BsFillPersonFill } from "react-icons/bs";
 import { AiOutlineSetting, AiFillMessage } from "react-icons/ai";
 import { IoIosBulb } from "react-icons/io";
-import { useNavigate } from "react-router";
 
 function Topbar() {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  const logout = (e) => {
-    e.preventDefault();
-    // dispatch(logOut());
-    // navigate("/");
-  };
-
   const role = "admin";
 
   return (

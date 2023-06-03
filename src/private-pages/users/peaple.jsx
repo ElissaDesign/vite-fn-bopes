@@ -15,20 +15,16 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 
-import { useEffect, useMemo, useState } from "react";
-
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 
 import DataTable from "react-data-table-component";
 
 import PeapleImg from "../../assets/images/peaple.png";
 import InviteUser from "../../components/user-register";
 import { useGetUsersQuery } from "../../redux/api/apiSlice";
-import { getUsersSuccess } from "../../redux/slices/usersSlice";
 
 export default function Peaple() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const dispatch = useDispatch();
 
   const customStyles = {
     headCells: {
@@ -66,7 +62,7 @@ export default function Peaple() {
     },
   ];
 
-  const { data, isSuccess, isLoading } = useGetUsersQuery();
+  const { data, isSuccess } = useGetUsersQuery();
 
   const [records, setRecords] = useState(null);
   const [option, setOption] = useState("name");

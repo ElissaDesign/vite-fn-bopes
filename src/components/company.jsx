@@ -1,18 +1,13 @@
 import { useState } from "react";
 import { BiBuildingHouse } from "react-icons/bi";
-import {
-  useCreateOrganizationMutation,
-  useGetOrganizationQuery,
-  useUpdateOrganizationMutation,
-} from "../redux/api/apiSlice";
+import { useCreateOrganizationMutation } from "../redux/api/apiSlice";
 import { Spinner } from "@chakra-ui/react";
 import { errorToast, successToast } from "../hooks/toast-messages";
 import Details from "./company-details";
 
 export default function Company() {
   const [name, setName] = useState("");
-  const [createOrganization, { isLoading, isSuccess }] =
-    useCreateOrganizationMutation();
+  const [createOrganization, { isLoading }] = useCreateOrganizationMutation();
 
   const handleSubmit = async (e) => {
     e.preventDefault();

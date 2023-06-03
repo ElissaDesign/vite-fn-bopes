@@ -33,8 +33,43 @@ export const apiSlice = createApi({
     currentUser: builder.query({
       query: () => "/auth/currentuser",
     }),
+    signOut: builder.mutation({
+      query: () => ({
+        url: "/auth/signout",
+        method: "POST",
+      }),
+    }),
     getUsers: builder.query({
       query: () => "/users",
+    }),
+
+    getUsersWithNoOrg: builder.query({
+      query: () => "/users/nullid",
+    }),
+
+    // Requests
+    getRequests: builder.query({
+      query: () => "/requests",
+    }),
+    getRequest: builder.query({
+      query: (requestId) => ({
+        url: "/requests/request",
+        body: requestId,
+      }),
+    }),
+    createRequest: builder.mutation({
+      query: (request) => ({
+        url: "/requests",
+        method: "POST",
+        body: request,
+      }),
+    }),
+    deleteRequest: builder.mutation({
+      query: (requestId) => ({
+        url: `/requests/request`,
+        method: "DELETE",
+        body: requestId,
+      }),
     }),
 
     // Organization
@@ -76,8 +111,15 @@ export const {
   useUserRegisterMutation,
   useUserLoginMutation,
   useCurrentUserQuery,
+  useSignOutMutation,
   useInviteUserMutation,
   useGetUsersQuery,
+  useGetUsersWithNoOrgQuery,
+  // Request Id
+  useCreateRequestMutation,
+  useGetRequestQuery,
+  useGetRequestsQuery,
+  useDeleteRequestMutation,
   // Organization
   useGetOrganizationsQuery,
   useGetOrganizationQuery,
