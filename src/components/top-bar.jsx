@@ -1,6 +1,5 @@
 /* eslint-disable no-constant-condition */
 /* eslint-disable react/no-unknown-property */
-import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { BiLogIn } from "react-icons/bi";
 import { MdNotifications } from "react-icons/md";
@@ -20,16 +19,27 @@ import { BsFillPersonFill } from "react-icons/bs";
 import { AiOutlineSetting, AiFillMessage } from "react-icons/ai";
 import { IoIosBulb } from "react-icons/io";
 import { useNavigate } from "react-router";
+import { useSignOutMutation } from "../redux/api/apiSlice";
+import { errorToast } from "../hooks/toast-messages";
 
 export default function Topbar() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
-  //   const logout = (e) => {
-  //     e.preventDefault();
-  //     dispatch(logOut());
-  //     navigate("/");
-  //   };
+  const [signOut] = useSignOutMutation();
+
+  // Not working this needs to be fixed
+  const Logout = async (e) => {
+    e.preventDefault();
+    try {
+      const signout = await signOut();
+      navigate("/auth/login");
+      console.log(signout);
+    } catch (error) {
+      console.log(error);
+      errorToast("Failed to sign out");
+    }
+    navigate("/");
+  };
 
   const role = "admin";
 
@@ -116,7 +126,10 @@ export default function Topbar() {
 
                 <hr />
                 <div>
-                  <div className="flex items-center cursor-pointer hover:bg-grey-white duration-300 py-4 text-grey">
+                  <div
+                    onClick={Logout}
+                    className="flex items-center cursor-pointer hover:bg-grey-white duration-300 py-4 text-grey"
+                  >
                     <BiLogIn className="mr-4 text-grey-light text-lg" />
                     <p>Log out</p>
                   </div>

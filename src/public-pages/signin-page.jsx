@@ -34,6 +34,7 @@ export default function SignupPage() {
         email,
         password,
       }).unwrap();
+      localStorage.setItem("role", newdata.data.role);
       dispatch(loginSuccess({ ...newdata }));
       navigate("/dashboard");
     } catch (error) {
@@ -43,8 +44,8 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="w-[90%] md:w-2/5 mx-auto mt-20">
-      <div>
+    <div className="w-[90%] md:w-2/5 mx-auto pt-20">
+      <div className="mt-20">
         <p className="text-gray-300 text-center text-lg font-semibold">
           Sign in to your account 🌞
         </p>

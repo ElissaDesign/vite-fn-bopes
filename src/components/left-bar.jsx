@@ -18,8 +18,7 @@ import { CgPlayListAdd } from "react-icons/cg";
 export default function Leftbar() {
   const [open, setOpen] = useState(false);
 
-  //   const role = window.localStorage.getItem("role");
-  const role = "superadmin";
+  const role = localStorage.getItem("role");
 
   const Menus =
     role === "superadmin"
@@ -34,27 +33,11 @@ export default function Leftbar() {
             src: "/dashboard/organizations",
             icon: <CgPlayListAdd />,
           },
+
           {
-            title: "Messages ",
-            src: "/dashboard/messages",
-            gap: true,
-            icon: <AiFillMessage />,
-          },
-          {
-            title: "Peaple ",
-            src: "/dashboard/peaple",
-            gap: true,
-            icon: <AiFillMessage />,
-          },
-          {
-            title: "Reports",
-            src: "/dashboard/reports",
+            title: "Registration Requests",
+            src: "/dashboard/requests",
             icon: <IoDocumentTextOutline />,
-          },
-          {
-            title: "Settings",
-            src: "/dashboard/settings",
-            icon: <FiSettings />,
           },
         ]
       : [
@@ -62,6 +45,12 @@ export default function Leftbar() {
             title: "Dashboard",
             src: "/dashboard",
             icon: <MdOutlineDashboard />,
+          },
+          {
+            title: "Peaple ",
+            src: "/dashboard/peaple",
+            gap: true,
+            icon: <AiFillMessage />,
           },
           { title: "Bar", src: "/dashboard/bar", icon: <IoMdBeer /> },
           {
@@ -105,20 +94,12 @@ export default function Leftbar() {
 
   return (
     <div className="mt-20">
-      {/* <div className=" bg-blue absolute top-7 ">
-        <MdOutlineMenuOpen
-          className={`text-2xl text-gray-700 mr-2 cursor-pointer ${
-            !open && "rotate-180"
-          }`}
-          onClick={() => setOpen(!open)}
-        />
-      </div> */}
       <div
         className={`bg-blue h-screen md:p-5 pt-8 ${
           open ? "w-72" : "md:w-20 w-0"
         } relative duration-300`}
       >
-        <div className="absolute top-7 right-[-44px]">
+        <div className="absolute top-7 right-[-44px] z-50 md:z-0 ">
           <MdOutlineMenuOpen
             className={`text-2xl text-gray-700 mr-2 cursor-pointer ${
               !open && "rotate-180"
