@@ -22,8 +22,6 @@ export default function SignupPage() {
 
   const loginData = useSelector((state) => state.login);
 
-  console.log(loginData);
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
