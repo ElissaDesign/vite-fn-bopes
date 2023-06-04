@@ -50,7 +50,11 @@ export default function Details() {
             className="w-full p-1 px-2 text-gray-300 outline-none font-light"
           >
             {data?.data.map((value) => {
-              return <option value={value.id}>{value.name}</option>;
+              return (
+                <option key={value.id} value={value.id}>
+                  {value.name}
+                </option>
+              );
             })}
           </Select>
         </div>

@@ -1,4 +1,4 @@
-import ComingSoon from "../components/coming-soom";
+import ComingSoon from "../../components/coming-soom";
 
 export default function SuperDashboard() {
   return (

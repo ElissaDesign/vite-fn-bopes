@@ -37,7 +37,9 @@ export default function SignupPage() {
       navigate("/dashboard");
     } catch (error) {
       dispatch(loginFail({ ...error }));
-      errorToast(loginData?.error && `${error.data.message}`);
+      errorToast(
+        (loginData?.error && `${error.data.message}`) || "server error"
+      );
     }
   };
 

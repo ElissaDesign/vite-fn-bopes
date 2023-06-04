@@ -9,7 +9,6 @@ const LandingPage = React.lazy(() => import("../public-pages/landing-page"));
 const AboutPage = React.lazy(() => import("../public-pages/about-page"));
 const SigninPage = React.lazy(() => import("../public-pages/signin-page"));
 const SignupPage = React.lazy(() => import("../public-pages/signup-page"));
-// const Dashboard = React.lazy(() => import("../private-pages/dashboard"));
 const Dashboard = React.lazy(() => import("../routes/private-routes"));
 
 export const AppComponents = () => {
