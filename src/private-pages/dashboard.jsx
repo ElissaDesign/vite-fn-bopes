@@ -1,7 +1,7 @@
 import CheckRole from "../hooks/check-roles";
-import SupAdDashboard from "./super-dashboard";
-import AdminDashboard from "./admin-dashboard";
-import ManagerDashboard from "./manager-dashboard";
+import SupAdDashboard from "../private-pages/super-admin/super-dashboard";
+import AdminDashboard from "../private-pages/admin/admin-dashboard";
+import ManagerDashboard from "../private-pages/manager/manager-dashboard";
 import EmployeeDashboard from "./employee-dasboard";
 import ExpireDashboard from "./token-expired";
 // import AccountantDashboard from "./accountantDashboard";

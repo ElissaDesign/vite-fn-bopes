@@ -1,7 +1,6 @@
 /* eslint-disable prefer-destructuring */
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 const BACKEND_URL = import.meta.env.VITE_REACT_APP_BACKEND_URL;
-console.log(BACKEND_URL);
 const baseQuery = fetchBaseQuery({
   baseUrl: BACKEND_URL,
   fetchFn: (url, config) => fetch(url, { ...config, credentials: "include" }),
@@ -106,6 +105,41 @@ export const apiSlice = createApi({
         method: "PATCH",
       }),
     }),
+
+    // Departments or services
+    getDepartments: builder.query({
+      query: () => "/departments",
+    }),
+    getDepartment: builder.query({
+      query: (id) => `department/${id}`,
+    }),
+    createDepartment: builder.mutation({
+      query: (name) => ({
+        url: "/departments",
+        method: "POST",
+        body: name,
+      }),
+    }),
+    deleteDepartment: builder.mutation({
+      query: (id) => ({
+        url: `departments/${id}`,
+        method: "DELETE",
+      }),
+    }),
+    updateDepartment: builder.mutation({
+      query: (department) => ({
+        url: `departments`,
+        method: "PATCH",
+        body: department,
+      }),
+    }),
+    assignDepartment: builder.mutation({
+      query: (department) => ({
+        url: "/users/assigndepartment",
+        method: "PATCH",
+        body: department,
+      }),
+    }),
   }),
 });
 export const {
@@ -128,4 +162,11 @@ export const {
   useDeleteOrganizationMutation,
   useUpdateOrganizationMutation,
   useAssignOrganizationMutation,
+  // Departments
+  useCreateDepartmentMutation,
+  useDeleteDepartmentMutation,
+  useGetDepartmentQuery,
+  useGetDepartmentsQuery,
+  useUpdateDepartmentMutation,
+  useAssignDepartmentMutation,
 } = apiSlice;

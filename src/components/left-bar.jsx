@@ -8,12 +8,13 @@ import {
 } from "react-icons/md";
 import { IoMdBeer } from "react-icons/io";
 import { FiSettings } from "react-icons/fi";
-import { TbToolsKitchen2 } from "react-icons/tb";
+import { TbHotelService, TbToolsKitchen2 } from "react-icons/tb";
 import { GiPartyPopper } from "react-icons/gi";
 import { RiHotelBedFill } from "react-icons/ri";
 import { AiFillMessage } from "react-icons/ai";
 import { NavLink } from "react-router-dom";
 import { CgPlayListAdd } from "react-icons/cg";
+import { TiGroupOutline } from "react-icons/ti";
 
 export default function Leftbar() {
   const [open, setOpen] = useState(false);
@@ -40,18 +41,38 @@ export default function Leftbar() {
             icon: <IoDocumentTextOutline />,
           },
         ]
-      : [
+      : role === "admin"
+      ? [
           {
             title: "Dashboard",
             src: "/dashboard",
             icon: <MdOutlineDashboard />,
           },
           {
+            title: "Services",
+            src: "/dashboard/services",
+            gap: true,
+            icon: <TbHotelService />,
+          },
+          {
             title: "Peaple ",
             src: "/dashboard/peaple",
             gap: true,
-            icon: <AiFillMessage />,
+            icon: <TiGroupOutline />,
           },
+
+          {
+            title: "Reports",
+            src: "/dashboard/reports",
+            icon: <IoDocumentTextOutline />,
+          },
+          {
+            title: "Settings",
+            src: "/dashboard/settings",
+            icon: <FiSettings />,
+          },
+        ]
+      : [
           { title: "Bar", src: "/dashboard/bar", icon: <IoMdBeer /> },
           {
             title: "Kitchen",
@@ -79,16 +100,6 @@ export default function Leftbar() {
             src: "/dashboard/messages",
             gap: true,
             icon: <AiFillMessage />,
-          },
-          {
-            title: "Reports",
-            src: "/dashboard/reports",
-            icon: <IoDocumentTextOutline />,
-          },
-          {
-            title: "Settings",
-            src: "/dashboard/settings",
-            icon: <FiSettings />,
           },
         ];
 
