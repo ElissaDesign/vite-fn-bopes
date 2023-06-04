@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { ChakraProvider } from "@chakra-ui/react";
-import "react-app-polyfill/ie11";
 import App from "./App.jsx";
 import "./index.css";
 
