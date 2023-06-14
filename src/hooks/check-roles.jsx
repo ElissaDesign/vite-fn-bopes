@@ -6,7 +6,7 @@ export default function CheckRole(props) {
   const { children, roles, ...otherProps } = props;
   const { data } = useCurrentUserQuery();
 
-  const role = data?.currentUser.role || null;
+  const role = data?.currentUser.role || localStorage.getItem("role");
 
   if (roles?.includes(role))
     return <React.Fragment {...otherProps}>{children}</React.Fragment>;

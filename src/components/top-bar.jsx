@@ -2,7 +2,7 @@
 /* eslint-disable react/no-unknown-property */
 import { Link } from "react-router-dom";
 import { BiLogIn } from "react-icons/bi";
-import { MdNotifications } from "react-icons/md";
+import { MdAutorenew, MdNotifications } from "react-icons/md";
 import {
   Popover,
   PopoverTrigger,
@@ -16,14 +16,22 @@ import {
   Box,
 } from "@chakra-ui/react";
 import { BsFillPersonFill } from "react-icons/bs";
-import { AiOutlineSetting, AiFillMessage } from "react-icons/ai";
+import {
+  AiOutlineSetting,
+  AiFillMessage,
+  AiOutlineClose,
+} from "react-icons/ai";
 import { IoIosBulb } from "react-icons/io";
 import { useNavigate } from "react-router";
 import { useSignOutMutation } from "../redux/api/apiSlice";
 import { errorToast } from "../hooks/toast-messages";
+import { FiMenu } from "react-icons/fi";
+import { useState } from "react";
+import LeftbarSuperAdmin from "./mediaQuerries/super-admin-left-bar";
 
 export default function Topbar() {
   const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
 
   const [signOut] = useSignOutMutation();
 
@@ -45,8 +53,20 @@ export default function Topbar() {
 
   return (
     <div>
-      <div className="fixed top-0 left-0 z-10 w-full shadow h-14 md:h-20 flex-1 flex flex-row items-center justify-between bg-white">
-        <div className="pl-12 flex items-center">Logo</div>
+      <div className=" font-sans top-0 sticky shadow h-14 md:h-20 flex-1 flex flex-row items-center justify-between bg-white-300 dark:bg-dark-300">
+        <div className="inline-flex items-center dark:text-white-300 font-medium">
+          <div
+            className="block md:hidden cursor-pointer "
+            onClick={() => setOpen(!open)}
+          >
+            {open ? (
+              <AiOutlineClose className="mr-2  text-2xl transition-all duration-300 ease-in-out " />
+            ) : (
+              <FiMenu className="mr-2  text-2xl transition-all duration-300 ease-in-out  " />
+            )}
+          </div>
+          <h1 className="md:ml-4">Dashboard</h1>
+        </div>
 
         <div className="mr-12 flex items-center">
           <div className=" md:mr-24 flex flex-row items-center">
@@ -138,6 +158,13 @@ export default function Topbar() {
             </PopoverContent>
           </Popover>
         </div>
+      </div>
+      <div
+        className={`z-100  ${
+          open ? "w-[80%] block" : "w-[0%] hidden"
+        } duration-300 transition-width ease-in-out fixed`}
+      >
+        <LeftbarSuperAdmin />
       </div>
     </div>
   );

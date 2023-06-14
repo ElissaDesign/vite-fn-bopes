@@ -4,6 +4,7 @@ import { Route, Routes } from "react-router-dom";
 import Loader from "../components/css-loader/loader";
 import Leftbar from "../components/left-bar";
 import Topbar from "../components/top-bar";
+import ComingSoon from "../components/coming-soom";
 
 const Company = React.lazy(() => import("../components/company"));
 const Peaple = React.lazy(() => import("../private-pages/users/peaple"));
@@ -20,25 +21,29 @@ const Settings = React.lazy(() => import("../private-pages/settings"));
 
 export default function PrivateRoutes() {
   return (
-    <div>
-      <Topbar />
-      <div className="w-full flex items-start">
+    <div className="w-full flex md:flex-row flex-col dark:bg-dark-300">
+      <div className="hidden md:block md:basis-[13%]">
         <Leftbar />
-        <div className="w-full mt-24 md:mx-16 px-4 md:px-0">
-          <Suspense fallback={<Loader />}>
-            <Routes>
-              <Route path="" element={<Dashboard />} />
-              <Route path="/bar" element={<Dashboard />} />
-              <Route path="/company" element={<Company />} />
-              <Route path="/peaple" element={<Peaple />} />
-              <Route path="/organizations" element={<Organizations />} />
-              <Route path="/requests" element={<RegistrationRequests />} />
-              <Route path="/services" element={<Services />} />
-              <Route path="/reports" element={<Reports />} />
-              <Route path="/settings" element={<Settings />} />
-            </Routes>
-          </Suspense>
+      </div>
+      <div className="md:basis-[87%] h-[100vh] overflow-scroll">
+        <div className="">
+          <Topbar />
         </div>
+        <Suspense fallback={<Loader />}>
+          <Routes>
+            <Route path="" element={<Dashboard />} />
+            <Route path="/bar" element={<Dashboard />} />
+            <Route path="/company" element={<Company />} />
+            <Route path="/peaple" element={<Peaple />} />
+            <Route path="/organizations" element={<Organizations />} />
+            <Route path="/customers" element={<ComingSoon />} />
+            <Route path="/products" element={<ComingSoon />} />
+            <Route path="/requests" element={<RegistrationRequests />} />
+            <Route path="/services" element={<Services />} />
+            <Route path="/reports" element={<Reports />} />
+            <Route path="/settings" element={<Settings />} />
+          </Routes>
+        </Suspense>
       </div>
     </div>
   );

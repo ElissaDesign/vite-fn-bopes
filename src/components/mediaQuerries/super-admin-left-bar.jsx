@@ -19,10 +19,10 @@ import { FiHelpCircle, FiSettings } from "react-icons/fi";
 import { GiLevelEndFlag, GiPartyPopper } from "react-icons/gi";
 import { RiCustomerService2Fill, RiHotelBedFill } from "react-icons/ri";
 import { Link, NavLink } from "react-router-dom";
-import { themeContext } from "../hooks/theme-context";
+import { themeContext } from "../../hooks/theme-context";
 import { DarkModeSwitch } from "react-toggle-dark-mode";
 
-export default function Leftbar() {
+export default function LeftbarSuperAdmin() {
   const [colorTheme, setTheme] = themeContext();
   const [darkSide, setDarkSide] = useState(
     colorTheme === "light" ? true : false
@@ -38,7 +38,7 @@ export default function Leftbar() {
   const role = localStorage.getItem("role");
 
   return (
-    <div className="bg-[#333B90] dark:bg-dark-100 h-screen font-sans">
+    <div className="block md:hidden bg-[#333B90] dark:bg-dark-100 h-screen font-sans">
       <div className="border-r border-gray-100 dark:border-gray-100/20 overflow-y-auto">
         <div className="mx-6 my-8 ">
           <div className="inline-flex items-center text-white-300 font-medium">
