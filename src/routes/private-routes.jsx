@@ -12,16 +12,21 @@ const Organizations = React.lazy(() =>
   import("../private-pages/super-admin/organizations")
 );
 const RegistrationRequests = React.lazy(() =>
-  import("../private-pages/super-admin/company-registration-request")
+  import("../private-pages/super-admin/requests")
 );
 const Dashboard = React.lazy(() => import("../private-pages/dashboard"));
 const Services = React.lazy(() => import("../private-pages/admin/services"));
 const Reports = React.lazy(() => import("../private-pages/reports"));
 const Settings = React.lazy(() => import("../private-pages/settings"));
 
+// superadmin links
+const Customers = React.lazy(() =>
+  import("../private-pages/super-admin/customers")
+);
+
 export default function PrivateRoutes() {
   return (
-    <div className="w-full flex md:flex-row flex-col dark:bg-dark-300">
+    <div className="w-full flex md:flex-row flex-col dark:bg-dark-frame-bg">
       <div className="hidden md:block md:basis-[13%]">
         <Leftbar />
       </div>
@@ -36,8 +41,9 @@ export default function PrivateRoutes() {
             <Route path="/company" element={<Company />} />
             <Route path="/peaple" element={<Peaple />} />
             <Route path="/organizations" element={<Organizations />} />
-            <Route path="/customers" element={<ComingSoon />} />
             <Route path="/products" element={<ComingSoon />} />
+            {/* super admin */}
+            <Route path="/customers" element={<Customers />} />
             <Route path="/requests" element={<RegistrationRequests />} />
             <Route path="/services" element={<Services />} />
             <Route path="/reports" element={<Reports />} />

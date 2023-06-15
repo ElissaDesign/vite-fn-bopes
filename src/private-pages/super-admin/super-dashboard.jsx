@@ -61,9 +61,9 @@ const data = [
 
 export default function SuperDashboard() {
   return (
-    <div className="bg-[#f8f9fc] pt-[25px] px-[25px]">
+    <div className="bg-[#f8f9fc] dark:bg-dark-frame-bg pt-[25px] px-[25px]">
       <div className="flex items-center justify-between">
-        <h1 className="text-[#5a5c69] text-[28px] leading-[34px] font-normal cursor-pointer">
+        <h1 className="text-[#5a5c69] dark:text-dark-text-fill text-[28px] leading-[34px] font-normal cursor-pointer">
           Dashboard
         </h1>
         <button className="bg-[#2e59d9] h-[32px] rounded-[3px] text-white-300 flex items-center justify-center px-[30px] cursor-pointer">
@@ -71,46 +71,46 @@ export default function SuperDashboard() {
         </button>
       </div>
 
-      <div className="grid grid-cols-4 gap-[30px] mt-[25px] pb-[15px]">
-        <div className="h-[100px] rounded-[8px] bg-white-300 border-l-[4px] border-[#2e59d9] flex items-center justify-between px-[30px] cursor-pointer hover:shadow-lg transform hover:scale-[103%] transition duration-300 ease-in-out">
+      <div className="grid grid-cols-4 gap-[30px] mt-[25px] pb-[15px] dark:bg-dark-bg">
+        <div className="h-[100px] rounded-[8px] bg-white dark:bg-dark-bg  border-l-[4px] border-[#2e59d9] flex items-center justify-between px-[30px] cursor-pointer hover:shadow-lg transform hover:scale-[103%] transition duration-300 ease-in-out">
           <div>
             <h2 className="text-[#b589df] text-[11px] leading-[17px] font-bold">
               EARNINGS(MONTHLY)
             </h2>
-            <h1 className="text-[20px] leading-[24px] font-bold text-[#5a5c69] mt-[5px]">
+            <h1 className="text-[20px] dark:text-dark-text-fill/75 leading-[24px] font-bold text-[#5a5c69] mt-[5px]">
               $40,0000
             </h1>
           </div>
           <FaRegCalendarMinus fontSize={28} />
         </div>
-        <div className="h-[100px] rounded-[8px] bg-white-300 border-l-[4px] border-[#1CC88A] flex items-center justify-between px-[30px] cursor-pointer hover:shadow-lg transform hover:scale-[103%] transition duration-300 ease-in-out">
+        <div className="h-[100px] rounded-[8px] bg-white dark:bg-dark-bg border-l-[4px] border-[#1CC88A] flex items-center justify-between px-[30px] cursor-pointer hover:shadow-lg transform hover:scale-[103%] transition duration-300 ease-in-out">
           <div>
             <h2 className="text-[#1CC88A] text-[11px] leading-[17px] font-bold">
               EARNINGS(ANNUAL)
             </h2>
-            <h1 className="text-[20px] leading-[24px] font-bold text-[#5a5c69] mt-[5px]">
+            <h1 className="text-[20px] dark:text-dark-text-fill/75 leading-[24px] font-bold text-[#5a5c69] mt-[5px]">
               $240,0000
             </h1>
           </div>
           <FaRegCalendarMinus fontSize={28} />
         </div>
-        <div className="h-[100px] rounded-[8px] bg-white-300 border-l-[4px] border-[#2e59d9] flex items-center justify-between px-[30px] cursor-pointer hover:shadow-lg transform hover:scale-[103%] transition duration-300 ease-in-out">
+        <div className="h-[100px] rounded-[8px] bg-white dark:bg-dark-bg border-l-[4px] border-[#2e59d9] flex items-center justify-between px-[30px] cursor-pointer hover:shadow-lg transform hover:scale-[103%] transition duration-300 ease-in-out">
           <div>
             <h2 className="text-[#1CC88A] text-[11px] leading-[17px] font-bold">
               TASKS(MONTHLY)
             </h2>
-            <h1 className="text-[20px] leading-[24px] font-bold text-[#5a5c69] mt-[5px]">
+            <h1 className="text-[20px] dark:text-dark-text-fill/75 leading-[24px] font-bold text-[#5a5c69] mt-[5px]">
               $40,0000
             </h1>
           </div>
           <FaRegCalendarMinus fontSize={28} />
         </div>
-        <div className="h-[100px] rounded-[8px] bg-white-300 border-l-[4px] border-[#2e59d9] flex items-center justify-between px-[30px] cursor-pointer hover:shadow-lg transform hover:scale-[103%] transition duration-300 ease-in-out">
+        <div className="h-[100px] rounded-[8px] bg-white dark:bg-dark-bg border-l-[4px] border-[#2e59d9] flex items-center justify-between px-[30px] cursor-pointer hover:shadow-lg transform hover:scale-[103%] transition duration-300 ease-in-out">
           <div>
             <h2 className="text-[#b589df] text-[11px] leading-[17px] font-bold">
               PENDING REQUESTS
             </h2>
-            <h1 className="text-[20px] leading-[24px] font-bold text-[#5a5c69] mt-[5px]">
+            <h1 className="text-[20px] dark:text-dark-text-fill/75 leading-[24px] font-bold text-[#5a5c69] mt-[5px]">
               $40,0000
             </h1>
           </div>
@@ -118,16 +118,16 @@ export default function SuperDashboard() {
         </div>
       </div>
 
-      <div className="flex mt-[22px] w-full gap-[30px]">
-        <div className="basis-[70%] border bg-white-300 md:shadow cursor-pointer rounded-[4px]">
-          <div className="bg-[#f8f9fc] flex items-center justify-between py-[15px] px-[20px] border-b-[1px] border-[#ededed] mb-[20px]">
+      <div className="flex mt-[22px] w-full gap-[30px] ">
+        <div className="basis-[70%] border bg-white dark:bg-dark-bg md:shadow cursor-pointer rounded-[4px]">
+          <div className="bg-[#f8f9fc] dark:bg-dark-bg flex items-center justify-between py-[15px] px-[20px] border-b-[1px] border-[#ededed] dark:border-b-[0.4px] dark:border-[#ededed]/10 mb-[20px]">
             <h2>Earnings Overview</h2>
             <FaEllipsisV color="gray" className="cursor-pointer" />
           </div>
           <div>
             <LineChart
-              width={650}
-              height={350}
+              width={900}
+              height={450}
               data={data}
               margin={{
                 top: 5,
@@ -151,8 +151,8 @@ export default function SuperDashboard() {
             </LineChart>
           </div>
         </div>
-        <div className="basis-[30%] border bg-white-300 shadow-md cursor-pointer rounded-[4px]">
-          <div className="bg-[#f8f9fc] flex items-center justify-between py-[15px] px-[20px] border-b-[1px] border-[#ededed] mb-[20px]">
+        <div className="basis-[30%] border bg-white dark:bg-dark-bg shadow-md cursor-pointer rounded-[4px]">
+          <div className="bg-[#f8f9fc] dark:bg-dark-bg flex items-center justify-between py-[15px] px-[20px] border-b-[1px] dark:border-b-[0.4px] dark:border-[#ededed]/10 border-[#ededed] mb-[20px]">
             <h2>Services Overview</h2>
             <FaEllipsisV color="gray" className="cursor-pointer" />
           </div>
@@ -162,15 +162,15 @@ export default function SuperDashboard() {
         </div>
       </div>
 
-      <div className="flex mt-[22px] w-full gap-[30px]">
-        <div className="basis-[55%] border bg-white-300 shadow-md cursor-pointer rounded-[4px]">
-          <div className="bg-[#f8f9fc] flex items-center justify-between py-[15px] px-[20px] border-b-[1px] border-[#ededed] mb-[20px]">
+      <div className="flex mt-[22px]  w-full gap-[30px]">
+        <div className="basis-[55%] border bg-white dark:bg-dark-bg shadow-md cursor-pointer rounded-[4px]">
+          <div className="bg-[#f8f9fc] dark:bg-dark-bg flex items-center justify-between py-[15px] px-[20px] border-b-[1px] border-[#ededed] mb-[20px]">
             <h2 className="text-[#2e59d9] font-bold text-[16px] leading-[19px]">
               Services Overview
             </h2>
             <FaEllipsisV color="gray" className="cursor-pointer" />
           </div>
-          <div className="px-[25px] space-y-[15px] py-[15px]">
+          <div className="px-[25px] space-y-[15px] py-[15px] dark:text-dark-text-fill">
             <div>
               <h2>Bar Service</h2>
               <Progress percent={30} strokeColor="#e74a3b" />
@@ -193,8 +193,8 @@ export default function SuperDashboard() {
             </div>
           </div>
         </div>
-        <div className="basis-[45%] border bg-white-300 shadow-md cursor-pointer rounded-[4px">
-          <div className="bg-[#f8f9fc] flex items-center justify-between py-[15px] px-[20px] border-b-[1px] border-[#ededed] mb-[20px]">
+        <div className="basis-[45%] dark:bg-dark-bg border bg-white shadow-md cursor-pointer rounded-[4px">
+          <div className="bg-[#f8f9fc] dark:bg-dark-bg flex items-center justify-between py-[15px] px-[20px] border-b-[1px] border-[#ededed] mb-[20px]">
             <h2 className="text-[#2e59d9] font-bold text-[16px] leading-[19px]">
               Services Overview
             </h2>

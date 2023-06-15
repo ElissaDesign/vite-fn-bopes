@@ -38,8 +38,8 @@ export default function Leftbar() {
   const role = localStorage.getItem("role");
 
   return (
-    <div className="bg-[#333B90] dark:bg-dark-100 h-screen font-sans">
-      <div className="border-r border-gray-100 dark:border-gray-100/20 overflow-y-auto">
+    <div className="bg-[#333B90] dark:bg-dark-bg h-screen font-sans">
+      <div className="border-r border-gray-100 dark:border-gray-100/10 overflow-y-auto text-dark-text-fill">
         <div className="mx-6 my-8 ">
           <div className="inline-flex items-center text-white-300 font-medium">
             <MdAutorenew className="mr-2  text-2xl " />

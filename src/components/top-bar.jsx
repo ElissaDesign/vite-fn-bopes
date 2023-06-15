@@ -53,8 +53,8 @@ export default function Topbar() {
 
   return (
     <div>
-      <div className=" font-sans top-0 sticky shadow h-14 md:h-20 flex-1 flex flex-row items-center justify-between bg-white-300 dark:bg-dark-300">
-        <div className="inline-flex items-center dark:text-white-300 font-medium">
+      <div className="dark:bg-dark-bg font-sans top-0 sticky shadow h-14 md:h-20 flex-1 flex flex-row items-center justify-between bg-white-300 dark:bg-dark-300 border-b border-gray-100 dark:border-gray-100/20">
+        <div className="inline-flex items-center dark:text-dark-text-fill font-medium">
           <div
             className="block md:hidden cursor-pointer "
             onClick={() => setOpen(!open)}

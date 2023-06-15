@@ -76,12 +76,23 @@ export const apiSlice = createApi({
     getOrganizations: builder.query({
       query: () => "/organizations",
     }),
+    // customers
+    getOrganizationOwned: builder.query({
+      query: () => "/organizations/customers",
+    }),
     getOrganization: builder.query({
       query: (id) => `organizations/${id}`,
     }),
     createOrganization: builder.mutation({
       query: (organization) => ({
         url: "/organizations",
+        method: "POST",
+        body: organization,
+      }),
+    }),
+    registerOrganization: builder.mutation({
+      query: (organization) => ({
+        url: "/organizations/create",
         method: "POST",
         body: organization,
       }),
@@ -158,10 +169,12 @@ export const {
   // Organization
   useGetOrganizationsQuery,
   useGetOrganizationQuery,
+  useGetOrganizationOwnedQuery,
   useCreateOrganizationMutation,
   useDeleteOrganizationMutation,
   useUpdateOrganizationMutation,
   useAssignOrganizationMutation,
+  useRegisterOrganizationMutation,
   // Departments
   useCreateDepartmentMutation,
   useDeleteDepartmentMutation,
