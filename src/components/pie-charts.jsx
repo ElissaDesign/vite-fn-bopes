@@ -59,7 +59,7 @@ export default function PieComponent() {
       <div className="grid grid-cols-4">
         {data.map((item, index) => (
           <p key={index} className="cursor-pointer font-bold">
-            {item.name}
+            <h2 className="text-dark-text-fill">{item.name}</h2>
           </p>
         ))}
       </div>

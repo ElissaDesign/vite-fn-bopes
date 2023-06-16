@@ -32,7 +32,10 @@ export default function SignupPage() {
         email,
         password,
       }).unwrap();
-      localStorage.setItem("role", newdata.data.role);
+      console.log(email);
+
+      localStorage.setItem("role", newdata.data.user.role);
+      localStorage.setItem("auth_token", newdata.data.token);
       dispatch(loginSuccess({ ...newdata }));
       navigate("/dashboard");
     } catch (error) {

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react/no-children-prop */
@@ -64,7 +65,12 @@ export default function Requests() {
     }
   };
 
-  const { data } = useGetRequestsQuery();
+  const { data } = useGetRequestsQuery({
+    pollingInterval: 3000,
+    refetchOnMountOrArgChange: true,
+    refetchOnFocus: true,
+    refetchOnReconnect: true,
+  });
 
   useEffect(() => {
     dispatch(getRequests(data?.data));
@@ -139,7 +145,7 @@ export default function Requests() {
   }
 
   return (
-    <div className="bg-[#f8f9fc] dark:bg-dark-frame-bg pt-[25px] px-[25px]">
+    <div className="bg-[#f8f9fc] dark:bg-dark-frame-bg px-[25px] pt-[72px]">
       <div className="flex items-center justify-between">
         <h1 className="text-[#5a5c69] dark:text-dark-text-fill text-[28px] leading-[34px] font-normal cursor-pointer">
           Register Request{" "}

@@ -14,36 +14,14 @@ import DataTable from "../../components/data-table";
 import { Icon } from "@iconify/react";
 import { useGetOrganizationOwnedQuery } from "../../redux/api/apiSlice";
 
-const data = [
-  {
-    key: "1",
-    name: "John Brown",
-    age: 32,
-    address: "New York No. 1 Lake Park",
-  },
-  {
-    key: "2",
-    name: "Joe Black",
-    age: 42,
-    address: "London No. 1 Lake Park",
-  },
-  {
-    key: "3",
-    name: "Jim Green",
-    age: 32,
-    address: "Sydney No. 1 Lake Park",
-  },
-  {
-    key: "4",
-    name: "Jim Red",
-    age: 32,
-    address: "London No. 2 Lake Park",
-  },
-];
-
 export default function Customers() {
-  const { data, isLoading } = useGetOrganizationOwnedQuery();
-  console.log(data?.organizations);
+  const { data, isLoading } = useGetOrganizationOwnedQuery({
+    pollingInterval: 3000,
+    refetchOnMountOrArgChange: true,
+    refetchOnFocus: true,
+    refetchOnReconnect: true,
+  });
+  console.log("Organization", data);
 
   const columns = [
     { Header: "Company Name", accessor: "OrganizationName" },
@@ -122,12 +100,12 @@ export default function Customers() {
     });
   }
   return (
-    <div className="bg-[#f8f9fc] dark:bg-dark-frame-bg pt-[25px] px-[25px]">
+    <div className="bg-[#f8f9fc] dark:bg-dark-frame-bg px-[25px] pt-[72px] ">
       <div className="flex items-center justify-between">
         <h1 className="text-[#5a5c69] dark:text-dark-text-fill text-[28px] leading-[34px] font-normal cursor-pointer">
           Customers
         </h1>
-        <button className="bg-[#2e59d9] h-[32px] rounded-[3px] text-white-300 flex items-center justify-center px-[30px] cursor-pointer">
+        <button className="bg-[#2e59d9] h-[32px] rounded-[3px] text-white flex items-center justify-center px-[30px] cursor-pointer">
           Generate
         </button>
       </div>

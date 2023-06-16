@@ -1,9 +1,18 @@
 /* eslint-disable prefer-destructuring */
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 const BACKEND_URL = import.meta.env.VITE_REACT_APP_BACKEND_URL;
+const getToken = () => localStorage.getItem("auth_token");
+
 const baseQuery = fetchBaseQuery({
   baseUrl: BACKEND_URL,
-  fetchFn: (url, config) => fetch(url, { ...config, credentials: "include" }),
+  prepareHeaders: (headers) => {
+    const token = getToken();
+    if (token) {
+      headers.set("Authorization", `Bearer ${token}`);
+    }
+    return headers;
+  },
+  credentials: "include",
 });
 
 export const apiSlice = createApi({

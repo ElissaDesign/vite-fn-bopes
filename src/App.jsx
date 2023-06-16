@@ -4,7 +4,7 @@ import { AppComponents } from "./routes/index";
 
 function App() {
   return (
-    <main>
+    <main className="dark:bg-dark-frame-bg">
       <AppComponents />
       <ToastContainer />
     </main>
