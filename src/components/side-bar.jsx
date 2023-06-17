@@ -22,7 +22,6 @@ import CheckRole from "../hooks/check-roles";
 import SideNavLink from "./side-nav-links";
 import { themeContext } from "../hooks/theme-context";
 import {
-  MdAutorenew,
   MdDarkMode,
   MdOutlineProductionQuantityLimits,
   MdSpaceDashboard,
@@ -32,6 +31,8 @@ import { FiHelpCircle } from "react-icons/fi";
 import { DarkModeSwitch } from "react-toggle-dark-mode";
 import { RiCustomerService2Fill } from "react-icons/ri";
 import { GiLevelEndFlag } from "react-icons/gi";
+import { useGetAllDepartmentsUserHaveQuery } from "../redux/api/apiSlice";
+import { Icon } from "@iconify/react";
 
 function Sidebar({ style, toggle }) {
   //   const { logout } = useContext(UserContext);
@@ -45,6 +46,14 @@ function Sidebar({ style, toggle }) {
   };
   const [togglei, setTogglei] = useState(false);
   useEffect(() => {}, [togglei]);
+
+  const { data, isLoading } = useGetAllDepartmentsUserHaveQuery({
+    pollingInterval: 2000,
+    refetchOnMountOrArgChange: true,
+    refetchOnFocus: true,
+    refetchOnReconnect: true,
+  });
+
   return (
     <div
       className={`${style} flex-col fixed h-[100%] pt-[3vh] lg:pt-[6vh] bg-[#333B90] dark:bg-dark-bg border-r p-2 text-dark-text-fill`}
@@ -92,19 +101,35 @@ function Sidebar({ style, toggle }) {
           </SideNavLink>
         </CheckRole>
 
-        {/* FOR ADMINS & COORDINATORS */}
-        <CheckRole roles={["admin", "coordinator"]}>
+        {/* FOR ADMINS & MANAGERS */}
+        <CheckRole roles={["admin"]}>
           <SideNavLink
             onClick={toggle}
-            to="/dashboard/trainees"
-            name="Trainees"
+            to="/dashboard/services"
+            name="Services"
           >
             <UserGroupIcon className="w-5 mr-2 dark:text-dark-text-fill" />
           </SideNavLink>
+
+          <SideNavLink
+            onClick={toggle}
+            to="/dashboard/employees"
+            name="Employees"
+          >
+            <UserGroupIcon className="w-5 mr-2 dark:text-dark-text-fill" />
+          </SideNavLink>
+
+          <SideNavLink
+            onClick={toggle}
+            name="Statistics"
+            to="/dashboard/statistics"
+          >
+            <GiLevelEndFlag className="w-5 mr-2 " />
+          </SideNavLink>
         </CheckRole>
 
-        {/* FOR ADMINS */}
-        <CheckRole roles={["admin"]}>
+        {/* FOR MANAGERS */}
+        <CheckRole roles={["manager"]}>
           <SideNavLink
             onClick={toggle}
             to="/dashboard/coordinators"
@@ -158,29 +183,22 @@ function Sidebar({ style, toggle }) {
           </SideNavLink>
         </CheckRole>
 
-        {/* FOR COORDINATORS */}
-        <CheckRole roles={["coordinator"]}>
+        {/* FOR ACCOUNTANTS */}
+        <CheckRole roles={["accountant"]}>
           <SideNavLink
             onClick={toggle}
-            to="/dashboard/sessions"
-            name="Sessions"
+            to="/dashboard/accountant/bar"
+            name="Bar Service"
           >
-            <BookOpenIcon className="w-5 mr-2 dark:text-dark-text-fill" />
-          </SideNavLink>
-          <SideNavLink onClick={toggle} to="/dashboard/ratings" name="Ratings">
-            <ClipboardListIcon className="w-5 mr-2 dark:text-dark-text-fill" />
-          </SideNavLink>
-          <SideNavLink
-            onClick={toggle}
-            name="Attendance"
-            to="/dashboard/attendance-rating"
-          >
-            <ClipboardCheckIcon className="w-5 mr-2 " />
+            <Icon
+              icon="carbon:bar"
+              className="w-5 mr-2 dark:text-dark-text-fill text-lg"
+            />
           </SideNavLink>
         </CheckRole>
 
-        {/* FOR TRAINEES */}
-        <CheckRole roles={["trainee"]}>
+        {/* FOR EMPLOYEES */}
+        <CheckRole roles={["user"]}>
           <SideNavLink
             onClick={toggle}
             name="Attendance"

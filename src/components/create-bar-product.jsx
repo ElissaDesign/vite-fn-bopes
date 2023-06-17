@@ -14,7 +14,7 @@ import { useInviteUserMutation } from "../redux/api/apiSlice";
 import { errorToast, successToast } from "../hooks/toast-messages";
 import { Icon } from "@iconify/react";
 
-export default function InviteUser() {
+export default function BarProduct() {
   const [inviteUser, { isLoading }] = useInviteUserMutation();
 
   const [show, setShow] = useState(false);

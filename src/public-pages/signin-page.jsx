@@ -1,16 +1,18 @@
 import { useState } from "react";
 import {
-  Button,
   Input,
   InputGroup,
   InputRightElement,
   Spinner,
 } from "@chakra-ui/react";
+import { Icon } from "@iconify/react";
+import Button from "../components/button";
 import { useUserLoginMutation } from "../redux/api/apiSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { loginFail, loginSuccess } from "../redux/slices/loginSlice";
 import { errorToast } from "../hooks/toast-messages";
+import Navbar from "../components/navBar";
 
 export default function SignupPage() {
   const [show, setShow] = useState(false);
@@ -47,51 +49,59 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="w-[90%] md:w-2/5 mx-auto pt-20">
-      <div className="mt-20">
-        <p className="text-gray-300 text-center text-lg font-semibold">
-          Sign in to your account 🌞
-        </p>
+    <div className="dark:bg-dark-bg">
+      <Navbar />
 
-        <div className="mt-8">
-          <p className="text-gray-300 font-medium text-base py-2">
-            Your email address
+      <div className="w-[90%] md:w-2/5 mx-auto pt-20 dark:bg-dark-bg dark:text-dark-text-fill bg-white">
+        <div className="mt-20">
+          <p className="text-gray-800 text-center text-lg font-semibold">
+            Sign in to your account 🌞
           </p>
-          <Input
-            placeholder="Enter your email address"
-            className="border h-10 px-2 py-4 border-gray text-gray text-gray-300 outline-none rounded font-light"
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <br />
-        </div>
 
-        <div className="mt-6">
-          <p className="text-gray-300 font-medium text-base pb-2">
-            Your password
-          </p>
-          <InputGroup size="md">
+          <div className="mt-8">
+            <p className="text-gray-800 font-medium text-base py-2">
+              Your email address
+            </p>
             <Input
-              pr="4.5rem"
-              className="text-gray-300"
-              type={show ? "text" : "password"}
-              placeholder="Enter password"
-              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Enter your email address"
+              className="border h-10 px-2 py-4 border-gray text-gray text-gray-700 outline-none rounded font-light"
+              onChange={(e) => setEmail(e.target.value)}
             />
-            <InputRightElement width="4.5rem">
-              <Button h="1.75rem" size="sm" onClick={handleClick}>
-                {show ? "Hide" : "Show"}
-              </Button>
-            </InputRightElement>
-          </InputGroup>
+            <br />
+          </div>
 
-          <br />
+          <div className="mt-6">
+            <p className="text-gray-800 font-medium text-base pb-2">
+              Your password
+            </p>
+            <InputGroup size="md">
+              <Input
+                pr="4.5rem"
+                className="text-gray-700"
+                type={show ? "text" : "password"}
+                placeholder="Enter password"
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <InputRightElement width="4.5rem">
+                <Button
+                  style="text-xl w-full text-sm flex items-center justify-center"
+                  size="sm"
+                  onClick={handleClick}
+                >
+                  {show ? <Icon icon="mdi:hide" /> : <Icon icon="mdi:show" />}
+                </Button>
+              </InputRightElement>
+            </InputGroup>
+
+            <br />
+          </div>
+          <button
+            className="px-8 py-3 rounded-md bg-[#3359DF] text-white font-bold w-full"
+            onClick={onSubmit}
+          >
+            {isLoading ? <Spinner /> : "Login"}
+          </button>
         </div>
-        <button
-          className="px-8 py-3 rounded-md bg-[#3359DF] text-white font-bold w-full"
-          onClick={onSubmit}
-        >
-          {isLoading ? <Spinner /> : "Login"}
-        </button>
       </div>
     </div>
   );

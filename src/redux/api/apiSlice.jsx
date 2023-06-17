@@ -56,6 +56,14 @@ export const apiSlice = createApi({
       query: () => "/users/nullid",
     }),
 
+    getAllUsersWithDepartments: builder.query({
+      query: () => "/users/employees",
+    }),
+
+    getAllDepartmentsUserHave: builder.query({
+      query: () => "/users/departments",
+    }),
+
     // Requests
     getRequests: builder.query({
       query: () => "/requests",
@@ -161,6 +169,7 @@ export const apiSlice = createApi({
       }),
     }),
   }),
+  refetchOnMountOrArgChange: 5_000,
 });
 export const {
   useUserRegisterMutation,
@@ -170,6 +179,8 @@ export const {
   useInviteUserMutation,
   useGetUsersQuery,
   useGetUsersWithNoOrgQuery,
+  useGetAllUsersWithDepartmentsQuery,
+  useGetAllDepartmentsUserHaveQuery,
   // Request Id
   useCreateRequestMutation,
   useGetRequestQuery,

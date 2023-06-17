@@ -14,7 +14,7 @@ const Button = ({
 }) => (
   <button
     type={type}
-    className={`btn ${variant} ${size} ${style}`}
+    className={`btn ${variant} ${size} ${style} bg-primary text-dark-text-fill rounded py-2`}
     onClick={onClick}
     disabled={disabled ? disabled : loading}
     {...rest}

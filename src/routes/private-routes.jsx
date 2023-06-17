@@ -20,6 +20,10 @@ const Dashboard = React.lazy(() => import("../private-pages/dashboard"));
 const Services = React.lazy(() => import("../private-pages/admin/services"));
 const Reports = React.lazy(() => import("../private-pages/reports"));
 const Settings = React.lazy(() => import("../private-pages/settings"));
+const Employees = React.lazy(() => import("../private-pages/admin/employees"));
+const BarAccountant = React.lazy(() =>
+  import("../private-pages/accountant/bar")
+);
 
 // superadmin links
 const Customers = React.lazy(() =>
@@ -37,7 +41,7 @@ export default function PrivateRoutes() {
           <div className="lg:basis-[15%]">
             <Leftbar toggle={handleClick} style="hidden lg:flex" />
           </div>
-          <div className="basis-[100%] lg:basis-[85%] md:ml-8 lg:ml-0 ">
+          <div className="basis-[100%] lg:basis-[85%] md:ml-8 lg:ml-0  md:mt-8 lg:mt-0">
             <Suspense fallback={<Loader />}>
               <div className=" ">
                 <Routes>
@@ -51,6 +55,8 @@ export default function PrivateRoutes() {
                   <Route path="/customers" element={<Customers />} />
                   <Route path="/requests" element={<RegistrationRequests />} />
                   <Route path="/services" element={<Services />} />
+                  <Route path="/employees" element={<Employees />} />
+                  <Route path="/accountant/bar" element={<BarAccountant />} />
                   <Route path="/reports" element={<Reports />} />
                   <Route path="/settings" element={<Settings />} />
                 </Routes>
