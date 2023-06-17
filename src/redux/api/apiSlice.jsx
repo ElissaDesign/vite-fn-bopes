@@ -1,9 +1,18 @@
 /* eslint-disable prefer-destructuring */
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 const BACKEND_URL = import.meta.env.VITE_REACT_APP_BACKEND_URL;
+const getToken = () => localStorage.getItem("auth_token");
+
 const baseQuery = fetchBaseQuery({
   baseUrl: BACKEND_URL,
-  fetchFn: (url, config) => fetch(url, { ...config, credentials: "include" }),
+  prepareHeaders: (headers) => {
+    const token = getToken();
+    if (token) {
+      headers.set("Authorization", `Bearer ${token}`);
+    }
+    return headers;
+  },
+  credentials: "include",
 });
 
 export const apiSlice = createApi({
@@ -47,6 +56,14 @@ export const apiSlice = createApi({
       query: () => "/users/nullid",
     }),
 
+    getAllUsersWithDepartments: builder.query({
+      query: () => "/users/employees",
+    }),
+
+    getAllDepartmentsUserHave: builder.query({
+      query: () => "/users/departments",
+    }),
+
     // Requests
     getRequests: builder.query({
       query: () => "/requests",
@@ -76,12 +93,23 @@ export const apiSlice = createApi({
     getOrganizations: builder.query({
       query: () => "/organizations",
     }),
+    // customers
+    getOrganizationOwned: builder.query({
+      query: () => "/organizations/customers",
+    }),
     getOrganization: builder.query({
       query: (id) => `organizations/${id}`,
     }),
     createOrganization: builder.mutation({
       query: (organization) => ({
         url: "/organizations",
+        method: "POST",
+        body: organization,
+      }),
+    }),
+    registerOrganization: builder.mutation({
+      query: (organization) => ({
+        url: "/organizations/create",
         method: "POST",
         body: organization,
       }),
@@ -141,6 +169,7 @@ export const apiSlice = createApi({
       }),
     }),
   }),
+  refetchOnMountOrArgChange: 5_000,
 });
 export const {
   useUserRegisterMutation,
@@ -150,6 +179,8 @@ export const {
   useInviteUserMutation,
   useGetUsersQuery,
   useGetUsersWithNoOrgQuery,
+  useGetAllUsersWithDepartmentsQuery,
+  useGetAllDepartmentsUserHaveQuery,
   // Request Id
   useCreateRequestMutation,
   useGetRequestQuery,
@@ -158,10 +189,12 @@ export const {
   // Organization
   useGetOrganizationsQuery,
   useGetOrganizationQuery,
+  useGetOrganizationOwnedQuery,
   useCreateOrganizationMutation,
   useDeleteOrganizationMutation,
   useUpdateOrganizationMutation,
   useAssignOrganizationMutation,
+  useRegisterOrganizationMutation,
   // Departments
   useCreateDepartmentMutation,
   useDeleteDepartmentMutation,

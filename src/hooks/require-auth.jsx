@@ -1,50 +1,16 @@
-// import { useEffect, useState } from "react";
-// import { useLocation, Navigate, Outlet, useNavigate } from "react-router-dom";
-// import { useSelector } from "react-redux";
-// import { selectCurrentToken } from "../../redux/slices/authSlice";
+/* eslint-disable react/prop-types */
+import React from "react";
+import { Navigate, useLocation } from "react-router-dom";
+import checkTokenExpiration from "./token-validate";
 
-import { Navigate, Outlet } from "react-router-dom";
-
-export function RequireAuth() {
-  const getCookieValue = (name) => {
-    const cookieString = document.cookie;
-    const cookies = cookieString.split(";");
-
-    for (let i = 0; i < cookies.length; i++) {
-      const cookie = cookies[i].trim();
-      if (cookie.startsWith(name + "=")) {
-        return cookie.substring(name.length + 1);
-      }
-    }
-
-    return null; // Cookie not found
-  };
-
-  const cookieValue = getCookieValue("session");
-
-  return cookieValue ? (
-    <Outlet />
-  ) : (
-    <Navigate to="auth/login" state={{ from: location.pathname }} replace />
-  );
+function RequireAuth({ children, ...props }) {
+  checkTokenExpiration();
+  const AuthToken = localStorage.getItem("auth_token");
+  const location = useLocation();
+  if (AuthToken) {
+    return <React.Fragment {...props}>{children}</React.Fragment>;
+  }
+  return <Navigate {...props} to="auth/login" state={location.pathname} />;
 }
 
-// export function RequireSumperAdmin() {
-//   const navigate = useNavigate();
-//   const location = useLocation();
-
-//   const role = window.localStorage.getItem("role");
-
-//   // useEffect( () =>{
-//   // 	const token= window.localStorage.getItem('auth_token')
-//   // 	if(!token){
-//   // 		navigate('/')
-//   // 	}
-//   // },[])
-
-//   return role === "superadmin" ? (
-//     <Outlet />
-//   ) : (
-//     <Navigate to="dashboard" state={{ from: location }} replace />
-//   );
-// }
+export default RequireAuth;

@@ -5,6 +5,7 @@ import { Spinner } from "@chakra-ui/react";
 import { TiPointOfInterest } from "react-icons/ti";
 import { errorToast, successToast } from "../hooks/toast-messages";
 import { useCreateRequestMutation } from "../redux/api/apiSlice";
+import Navbar from "../components/navBar";
 
 const Register = () => {
   const [createRequest, { isLoading }] = useCreateRequestMutation();
@@ -40,9 +41,11 @@ const Register = () => {
   };
 
   return (
-    <div className="">
-      <div className="block md:flex  flex-col md:flex-row ">
-        <div className="md:basis-1/2 md:mt-20 px-6 pt-20">
+    <div className="dark:bg-dark-bg">
+      <Navbar />
+
+      <div className="block md:flex  flex-col md:flex-row dark:bg-dark-bg ">
+        <div className="md:basis-1/2 md:mt-20 px-6 pt-20 dark:bg-dark-bg">
           <h1 className="font-bold text-2xl my-4">
             Welcome to our web app system!{" "}
           </h1>
