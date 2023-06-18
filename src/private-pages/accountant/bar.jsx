@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import {
   Modal,
   ModalBody,
@@ -10,7 +11,7 @@ import {
 import Button from "../../components/button";
 import BarProduct from "../../components/create-bar-product";
 
-export default function BarAccountant() {
+export default function BarAccountant({ department }) {
   const {
     isOpen: newDrinkModalOpen,
     onOpen: openNewDrinkModal,
@@ -24,11 +25,13 @@ export default function BarAccountant() {
         <ModalHeader className="text-center">New Drink</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <BarProduct />
+          <BarProduct department={department} />
         </ModalBody>
       </ModalContent>
     </Modal>
   );
+  console.log("Bar:", department);
+
   return (
     <div className="px-[25px] pt-[72px]">
       <div className="flex flex-col md:flex-row justify-between">

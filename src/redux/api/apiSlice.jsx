@@ -168,6 +168,18 @@ export const apiSlice = createApi({
         body: department,
       }),
     }),
+
+    // Products services
+    getProducts: builder.query({
+      query: () => "/products",
+    }),
+    createProduct: builder.mutation({
+      query: (product) => ({
+        url: "/products",
+        method: "POST",
+        body: product,
+      }),
+    }),
   }),
   refetchOnMountOrArgChange: 5_000,
 });
@@ -202,4 +214,8 @@ export const {
   useGetDepartmentsQuery,
   useUpdateDepartmentMutation,
   useAssignDepartmentMutation,
+
+  // Products
+  useCreateProductMutation,
+  useGetProductsQuery,
 } = apiSlice;

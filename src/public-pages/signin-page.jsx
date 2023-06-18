@@ -95,12 +95,13 @@ export default function SignupPage() {
 
             <br />
           </div>
-          <button
-            className="px-8 py-3 rounded-md bg-[#3359DF] text-white font-bold w-full"
+          <Button
+            style="text-xl w-full text-sm flex items-center justify-center"
+            size="lg"
             onClick={onSubmit}
           >
             {isLoading ? <Spinner /> : "Login"}
-          </button>
+          </Button>
         </div>
       </div>
     </div>

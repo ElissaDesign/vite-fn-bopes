@@ -47,6 +47,8 @@ function Sidebar({ style, toggle }) {
   const [togglei, setTogglei] = useState(false);
   useEffect(() => {}, [togglei]);
 
+  const departments = JSON.parse(localStorage.getItem("departments") || "[]");
+
   const { data, isLoading } = useGetAllDepartmentsUserHaveQuery({
     pollingInterval: 2000,
     refetchOnMountOrArgChange: true,
@@ -185,16 +187,19 @@ function Sidebar({ style, toggle }) {
 
         {/* FOR ACCOUNTANTS */}
         <CheckRole roles={["accountant"]}>
-          <SideNavLink
-            onClick={toggle}
-            to="/dashboard/accountant/bar"
-            name="Bar Service"
-          >
-            <Icon
-              icon="carbon:bar"
-              className="w-5 mr-2 dark:text-dark-text-fill text-lg"
-            />
-          </SideNavLink>
+          {departments.map((department) => (
+            <SideNavLink
+              key={department.id} // Make sure to provide a unique key prop
+              onClick={toggle}
+              to={`/dashboard/accountant/${department.name}`}
+              name={`${department.name} Services`}
+            >
+              <Icon
+                icon="carbon:bar"
+                className="w-5 mr-2 dark:text-dark-text-fill text-lg"
+              />
+            </SideNavLink>
+          ))}
         </CheckRole>
 
         {/* FOR EMPLOYEES */}

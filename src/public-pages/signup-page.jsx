@@ -6,6 +6,7 @@ import { TiPointOfInterest } from "react-icons/ti";
 import { errorToast, successToast } from "../hooks/toast-messages";
 import { useCreateRequestMutation } from "../redux/api/apiSlice";
 import Navbar from "../components/navBar";
+import Button from "../components/button";
 
 const Register = () => {
   const [createRequest, { isLoading }] = useCreateRequestMutation();
@@ -41,12 +42,12 @@ const Register = () => {
   };
 
   return (
-    <div className="dark:bg-dark-bg">
+    <div className="dark:bg-dark-bg h-screen">
       <Navbar />
 
-      <div className="block md:flex  flex-col md:flex-row dark:bg-dark-bg ">
-        <div className="md:basis-1/2 md:mt-20 px-6 pt-20 dark:bg-dark-bg">
-          <h1 className="font-bold text-2xl my-4">
+      <div className="dark:bg-dark-bg md:w-[80%] w-[90%] mx-auto">
+        <div className="mt-20 px-6 pt-[20px] dark:bg-dark-bg text-center">
+          <h1 className="font-bold text-2xl my-4 text-center">
             Welcome to our web app system!{" "}
           </h1>
           <p>
@@ -56,14 +57,14 @@ const Register = () => {
             your company profile in our system and grant you control over all
             your business activities.
           </p>
-          <h1 className="font-bold text-xl my-4 text-gray-300">
+          <h1 className="font-bold text-xl my-4 text-gray-800">
             Please provide the following details:
           </h1>
 
           <div className="border rounded p-2">
             <form action="" className="flex flex-col" onSubmit={onSubmit}>
               <div>
-                <p className="text-gray-200">
+                <p className="text-gray-700">
                   {" "}
                   Enter your company's official name
                 </p>
@@ -77,7 +78,7 @@ const Register = () => {
                 />
               </div>
               <div>
-                <p className="text-gray-200">
+                <p className="text-gray-700">
                   {" "}
                   Specify the nature of your business (e.g., retail, technology,
                   consulting).
@@ -92,7 +93,7 @@ const Register = () => {
                 />
               </div>
               <div>
-                <p className="text-gray-200">
+                <p className="text-gray-700">
                   {" "}
                   Enter the full name of the owner or authorized representative.
                 </p>
@@ -107,7 +108,7 @@ const Register = () => {
                 />
               </div>
               <div>
-                <p className="text-gray-200">
+                <p className="text-gray-700">
                   Provide the email address of the owner or authorized
                   representative
                 </p>
@@ -122,7 +123,7 @@ const Register = () => {
               </div>
 
               <div>
-                <p className="text-gray-200">
+                <p className="text-gray-700">
                   {" "}
                   Enter the primary contact number for your company.
                 </p>
@@ -137,7 +138,7 @@ const Register = () => {
               </div>
 
               <div>
-                <p className="text-gray-200">
+                <p className="text-gray-700">
                   Specify the physical address of your company's headquarters.
                 </p>
                 <input
@@ -151,7 +152,7 @@ const Register = () => {
               </div>
 
               <div>
-                <p className="text-gray-200">
+                <p className="text-gray-700">
                   If applicable, provide the URL of your company's website.
                 </p>
                 <input
@@ -163,7 +164,7 @@ const Register = () => {
                 />
               </div>
               <div>
-                <p className="text-gray-200">
+                <p className="text-gray-700">
                   Please provide a brief description of your company and its
                   core activities (limit: 100 words).
                 </p>
@@ -177,45 +178,46 @@ const Register = () => {
                 />
               </div>
 
-              <button
-                className="bg-blue text-white px-2 py-4 rounded font-bold"
+              <Button
+                style="text-xl w-full text-sm flex items-center justify-center"
+                size="sm"
                 type="submit"
               >
                 {isLoading ? <Spinner /> : `Request`}
-              </button>
+              </Button>
             </form>
           </div>
         </div>
-        <div className="md:basis-1/2 bg-blue mt-20 px-8">
-          <h1 className="mt-4 text-white font-bold">Terms and Conditions</h1>
+        <div className="mt-20 px-8">
+          <h1 className="mt-4  font-bold">Terms and Conditions</h1>
           <p className="my-2">
             By submitting this registration request, you agree to the following
             terms and conditions:
           </p>
           <div className="flex flex-row items-center border-t mt-4">
             <TiPointOfInterest className="bg-white rounded text-blue mr-2" />
-            <p className="text-white my-2">
+            <p className=" my-2">
               You acknowledge that the provided information is accurate and up
               to date.
             </p>
           </div>
           <div className="flex flex-row items-center">
             <TiPointOfInterest className="bg-white rounded text-blue mr-2" />
-            <p className="text-white my-2">
+            <p className=" my-2">
               You understand that the owner or authorized representative will
               have administrative control over the company's account.
             </p>
           </div>
           <div className="flex flex-row items-center">
             <TiPointOfInterest className="bg-white rounded text-blue mr-2" />
-            <p className="text-white my-2">
+            <p className=" my-2">
               You accept responsibility for all activities carried out under
               your company's account
             </p>
           </div>
           <div className="flex flex-row items-center">
             <TiPointOfInterest className="bg-white rounded text-blue mr-2" />
-            <p className="text-white my-2">
+            <p className=" my-2">
               You agree to comply with our platform's terms of service and
               privacy policy.
             </p>

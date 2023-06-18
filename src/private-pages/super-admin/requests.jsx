@@ -27,6 +27,7 @@ import {
   Spinner,
   useDisclosure,
 } from "@chakra-ui/react";
+import moment from "moment";
 
 export default function Requests() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -41,15 +42,13 @@ export default function Requests() {
   const [phone, setPhone] = useState();
   // const [requestId, setRequestId] = useState();
 
-  console.log("Details", details);
-
   const [registerOrganization, { isLoading }] =
     useRegisterOrganizationMutation();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log("details", company, name);
+      console.log("details", company, name, email, password, phone);
 
       const organization = await registerOrganization({
         company,
@@ -71,15 +70,18 @@ export default function Requests() {
     refetchOnFocus: true,
     refetchOnReconnect: true,
   });
+  console.log("Details====", data);
 
   useEffect(() => {
     dispatch(getRequests(data?.data));
   }, [data, dispatch]);
 
   const columns = [
+    { Header: "Date", accessor: "date" },
     { Header: "Company", accessor: "company" },
     { Header: "Business Type", accessor: "businessType" },
     { Header: "Email", accessor: "email" },
+    { Header: "Phone", accessor: "phone" },
     { Header: "Name", accessor: "name" },
     { Header: "Address", accessor: "address" },
     { Header: "Website", accessor: "website" },
@@ -111,7 +113,7 @@ export default function Requests() {
           <div
             onClick={() => {
               setDetails(row.original);
-              // handleRequest(row.id);
+              console.log(row.original);
               setCompany(row.original.company);
               setEmail(row.original.email);
               setPhone(row.original.phone);
@@ -134,10 +136,15 @@ export default function Requests() {
   let datum = [];
   if (requests && requests?.length > 0) {
     requests?.map((data, index) => {
+      const date = moment(data?.createdAt);
+      const formattedDate = date.format("dddd, MMMM Do, YYYY, h:mm:ss A");
+      console.log(formattedDate);
       datum[index] = {};
+      datum[index].date = formattedDate;
       datum[index].company = data.company;
       datum[index].businessType = data.businessType;
       datum[index].email = data.email;
+      datum[index].phone = data.phone;
       datum[index].name = data.name;
       datum[index].address = data.address;
       datum[index].website = data.website;

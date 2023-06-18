@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import React, { Suspense, useState } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import Loader from "../components/css-loader/loader";
 import Leftbar from "../components/side-bar";
 // import Leftbar from "../components/left-bar";
@@ -24,6 +24,9 @@ const Employees = React.lazy(() => import("../private-pages/admin/employees"));
 const BarAccountant = React.lazy(() =>
   import("../private-pages/accountant/bar")
 );
+const RestaurantAccountant = React.lazy(() =>
+  import("../private-pages/accountant/restaurant")
+);
 
 // superadmin links
 const Customers = React.lazy(() =>
@@ -33,6 +36,13 @@ const Customers = React.lazy(() =>
 export default function PrivateRoutes() {
   const [nav, setNav] = useState(false);
   const handleClick = () => setNav(!nav);
+
+  const departments = JSON.parse(localStorage.getItem("departments") || "[]");
+  const location = useLocation();
+  const activeservice = departments.find((obj) =>
+    location.pathname.includes(obj.name)
+  );
+
   return (
     <RequireAuth>
       <div className="flex flex-col  min-h-screen dark:bg-dark-frame-bg">
@@ -56,7 +66,16 @@ export default function PrivateRoutes() {
                   <Route path="/requests" element={<RegistrationRequests />} />
                   <Route path="/services" element={<Services />} />
                   <Route path="/employees" element={<Employees />} />
-                  <Route path="/accountant/bar" element={<BarAccountant />} />
+                  <Route
+                    path="/accountant/bar"
+                    element={<BarAccountant department={activeservice} />}
+                  />
+                  <Route
+                    path="/accountant/restaurant"
+                    element={
+                      <RestaurantAccountant department={activeservice} />
+                    }
+                  />
                   <Route path="/reports" element={<Reports />} />
                   <Route path="/settings" element={<Settings />} />
                 </Routes>
