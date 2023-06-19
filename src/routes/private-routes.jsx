@@ -27,6 +27,10 @@ const BarAccountant = React.lazy(() =>
 const RestaurantAccountant = React.lazy(() =>
   import("../private-pages/accountant/restaurant")
 );
+const BarEmployee = React.lazy(() => import("../private-pages/employee/bar"));
+const RestaurantEmployee = React.lazy(() =>
+  import("../private-pages/employee/restaurant")
+);
 
 // superadmin links
 const Customers = React.lazy(() =>
@@ -75,6 +79,14 @@ export default function PrivateRoutes() {
                     element={
                       <RestaurantAccountant department={activeservice} />
                     }
+                  />
+                  <Route
+                    path="/employee/bar"
+                    element={<BarEmployee department={activeservice} />}
+                  />
+                  <Route
+                    path="/employee/restaurant"
+                    element={<RestaurantEmployee department={activeservice} />}
                   />
                   <Route path="/reports" element={<Reports />} />
                   <Route path="/settings" element={<Settings />} />

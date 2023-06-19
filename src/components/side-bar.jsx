@@ -1,10 +1,9 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import {
   UsersIcon,
-  ClipboardCheckIcon,
-  TrendingUpIcon,
   ClipboardListIcon,
   KeyIcon,
   TemplateIcon,
@@ -12,11 +11,7 @@ import {
   UserGroupIcon,
   MoonIcon,
 } from "@heroicons/react/solid";
-import {
-  AcademicCapIcon,
-  BookOpenIcon,
-  CogIcon,
-} from "@heroicons/react/outline";
+import { AcademicCapIcon, CogIcon } from "@heroicons/react/outline";
 import Tooltip from "./tooltip";
 import CheckRole from "../hooks/check-roles";
 import SideNavLink from "./side-nav-links";
@@ -31,7 +26,7 @@ import { FiHelpCircle } from "react-icons/fi";
 import { DarkModeSwitch } from "react-toggle-dark-mode";
 import { RiCustomerService2Fill } from "react-icons/ri";
 import { GiLevelEndFlag } from "react-icons/gi";
-import { useGetAllDepartmentsUserHaveQuery } from "../redux/api/apiSlice";
+// import { useGetAllDepartmentsUserHaveQuery } from "../redux/api/apiSlice";
 import { Icon } from "@iconify/react";
 
 function Sidebar({ style, toggle }) {
@@ -49,12 +44,12 @@ function Sidebar({ style, toggle }) {
 
   const departments = JSON.parse(localStorage.getItem("departments") || "[]");
 
-  const { data, isLoading } = useGetAllDepartmentsUserHaveQuery({
-    pollingInterval: 2000,
-    refetchOnMountOrArgChange: true,
-    refetchOnFocus: true,
-    refetchOnReconnect: true,
-  });
+  // const { data, isLoading } = useGetAllDepartmentsUserHaveQuery({
+  //   pollingInterval: 2000,
+  //   refetchOnMountOrArgChange: true,
+  //   refetchOnFocus: true,
+  //   refetchOnReconnect: true,
+  // });
 
   return (
     <div
@@ -204,23 +199,19 @@ function Sidebar({ style, toggle }) {
 
         {/* FOR EMPLOYEES */}
         <CheckRole roles={["user"]}>
-          <SideNavLink
-            onClick={toggle}
-            name="Attendance"
-            to="/dashboard/attendance"
-          >
-            <ClipboardCheckIcon className="w-5 mr-2 " />
-          </SideNavLink>
-          <SideNavLink
-            onClick={() => {
-              toggle();
-              setTogglei(true);
-            }}
-            name="Performance"
-            to="/dashboard/performance"
-          >
-            <TrendingUpIcon className="w-5 mr-2 " />
-          </SideNavLink>
+          {departments.map((department) => (
+            <SideNavLink
+              key={department.id} // Make sure to provide a unique key prop
+              onClick={toggle}
+              to={`/dashboard/employee/${department.name}`}
+              name={`${department.name} Services`}
+            >
+              <Icon
+                icon="carbon:bar"
+                className="w-5 mr-2 dark:text-dark-text-fill text-lg"
+              />
+            </SideNavLink>
+          ))}
         </CheckRole>
 
         <hr className="mt-16 opacity-40" />

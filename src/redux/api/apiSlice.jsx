@@ -171,7 +171,10 @@ export const apiSlice = createApi({
 
     // Products services
     getProducts: builder.query({
-      query: () => "/products",
+      query: (departmentId) => `/products/products/${departmentId}`,
+    }),
+    getProduct: builder.query({
+      query: (productId) => `/products/${productId}`,
     }),
     createProduct: builder.mutation({
       query: (product) => ({
@@ -179,6 +182,44 @@ export const apiSlice = createApi({
         method: "POST",
         body: product,
       }),
+    }),
+    deleteProduct: builder.mutation({
+      query: (productId) => ({
+        url: `/products/${productId}`,
+        method: "DELETE",
+      }),
+    }),
+    updateProduct: builder.mutation({
+      query: (args) => {
+        const { productId, product } = args;
+        return {
+          url: `/products/${productId}`,
+          method: "PATCH",
+          body: product,
+        };
+      },
+    }),
+
+    // Transations
+    createTransaction: builder.mutation({
+      query: (transaction) => ({
+        url: "/transactions",
+        method: "POST",
+        body: transaction,
+      }),
+    }),
+    getEmployeeTransations: builder.query({
+      query: () => `/transactions/transactions`,
+    }),
+    updateTransaction: builder.mutation({
+      query: (args) => {
+        const { transactionId, transaction } = args;
+        return {
+          url: `/transactions/${transactionId}`,
+          method: "PATCH",
+          body: transaction,
+        };
+      },
     }),
   }),
   refetchOnMountOrArgChange: 5_000,
@@ -218,4 +259,12 @@ export const {
   // Products
   useCreateProductMutation,
   useGetProductsQuery,
+  useDeleteProductMutation,
+  useGetProductQuery,
+  useUpdateProductMutation,
+
+  // Transactions
+  useGetEmployeeTransationsQuery,
+  useCreateTransactionMutation,
+  useUpdateTransactionMutation,
 } = apiSlice;

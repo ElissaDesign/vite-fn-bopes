@@ -12,6 +12,7 @@ const checkTokenExpiration = async () => {
 
   if (expiration !== null && expiration.exp * 1000 < Date.now()) {
     localStorage.removeItem("auth_token");
+    localStorage.removeItem("departments");
     toast.error(t("Your token has expired, try to login again"));
     return false;
   } else if (expiration !== null && expiration.exp * 1000 > Date.now()) {

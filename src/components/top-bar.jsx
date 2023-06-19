@@ -47,6 +47,8 @@ export default function Topbar() {
     e.preventDefault();
     try {
       const signout = await signOut();
+      localStorage.removeItem("auth_token");
+      localStorage.removeItem("departments");
       navigate("/auth/login");
       console.log(signout);
     } catch (error) {

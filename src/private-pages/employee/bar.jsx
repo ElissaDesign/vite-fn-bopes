@@ -9,7 +9,6 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import Button from "../../components/button";
-import BarProduct from "../../components/create-bar-product";
 import { Icon } from "@iconify/react";
 import {
   useDeleteProductMutation,
@@ -19,8 +18,9 @@ import DataTable from "../../components/data-table";
 import moment from "moment";
 import { useState } from "react";
 import { errorToast, successToast } from "../../hooks/toast-messages";
+import BarTransaction from "../../components/create-bar-transaction";
 
-export default function BarAccountant({ department }) {
+export default function BarEmployee({ department }) {
   const [product, setProduct] = useState();
 
   console.log("productId", product);
@@ -31,7 +31,7 @@ export default function BarAccountant({ department }) {
   } = useDisclosure();
 
   const { data, isLoading } = useGetProductsQuery(department?.id, {
-    pollingInterval: 3000,
+    // pollingInterval: 9000,
     refetchOnMountOrArgChange: true,
     refetchOnFocus: true,
     refetchOnReconnect: true,
@@ -66,10 +66,10 @@ export default function BarAccountant({ department }) {
     <Modal isOpen={newDrinkModalOpen} onClose={closeNewDrinkModal}>
       <ModalOverlay />
       <ModalContent className=" dark:bg-dark-bg dark:text-dark-text-fill">
-        <ModalHeader className="text-center">New Drink</ModalHeader>
+        <ModalHeader className="text-center">New Transaction</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <BarProduct department={department} product={product} />
+          <BarTransaction department={department} product={product} />
         </ModalBody>
       </ModalContent>
     </Modal>
@@ -77,7 +77,7 @@ export default function BarAccountant({ department }) {
 
   const columns = [
     { Header: "Date", accessor: "date" },
-    { Header: "Drink Type", accessor: "drinkType" },
+    { Header: "Name", accessor: "drinkType" },
     { Header: "Drink Name", accessor: "drinkName" },
     { Header: "Purchase Price", accessor: "purchasingPrice" },
     { Header: "Quantity", accessor: "quantity" },
@@ -159,7 +159,7 @@ export default function BarAccountant({ department }) {
     <div className="px-[25px] pt-[72px]">
       <div className="flex items-center flex-row justify-between">
         <h1 className="text-gray-800  dark:text-dark-text-fill text-[28px] leading-[34px] font-semibold cursor-pointer">
-          Drinks
+          Bar Transactions
         </h1>
         <div className="">
           <Button
@@ -168,7 +168,7 @@ export default function BarAccountant({ department }) {
             size="lg"
             style="mt-2 lg:mt-5 px-4 text-xl font-normal mr-2"
           >
-            New Drink
+            New Transaction
           </Button>
         </div>
       </div>

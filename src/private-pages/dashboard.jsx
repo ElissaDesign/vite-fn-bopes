@@ -2,11 +2,9 @@ import CheckRole from "../hooks/check-roles";
 import SupAdDashboard from "../private-pages/super-admin/super-dashboard";
 import AdminDashboard from "../private-pages/admin/admin-dashboard";
 import ManagerDashboard from "../private-pages/manager/manager-dashboard";
-import EmployeeDashboard from "./employee-dasboard";
 import ExpireDashboard from "./token-expired";
 import AccountantDashboard from "./accountant/accountant-dashboard";
-// import AccountantDashboard from "./accountantDashboard";
-// import EmployeeDashboard from "./employeeDashboard";
+import EmployeeDashboard from "./employee/employee-dashboard";
 
 export default function Dashboard() {
   return (
