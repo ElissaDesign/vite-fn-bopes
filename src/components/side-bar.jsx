@@ -43,6 +43,7 @@ function Sidebar({ style, toggle }) {
   useEffect(() => {}, [togglei]);
 
   const departments = JSON.parse(localStorage.getItem("departments") || "[]");
+  console.log("mmg hgarfkwg wehmgwhgdchw", departments);
 
   // const { data, isLoading } = useGetAllDepartmentsUserHaveQuery({
   //   pollingInterval: 2000,
@@ -127,57 +128,19 @@ function Sidebar({ style, toggle }) {
 
         {/* FOR MANAGERS */}
         <CheckRole roles={["manager"]}>
-          <SideNavLink
-            onClick={toggle}
-            to="/dashboard/coordinators"
-            name="Coordinators"
-          >
-            <UsersIcon className="w-5 mr-2 dark:text-dark-text-fill" />
-          </SideNavLink>
-          <SideNavLink onClick={toggle} to="/dashboard/teams" name="Teams">
-            <UserGroupIcon className="w-5 mr-2 dark:text-dark-text-fill" />
-          </SideNavLink>
-          <SideNavLink onClick={toggle} to="/dashboard/cohorts" name="Cohorts">
-            <AcademicCapIcon className="w-5 mr-2 dark:text-dark-text-fill" />
-          </SideNavLink>
-          <SideNavLink onClick={toggle} to="/dashboard/phases" name="Phases">
-            <MoonIcon className="w-5 mr-2 dark:text-dark-text-fill" />
-          </SideNavLink>
-          <SideNavLink
-            onClick={toggle}
-            to="/dashboard/programs"
-            name="Programs"
-          >
-            {/* <ProgramIcon className="w-5 mr-2 dark:text-dark-text-fill" /> */}
-          </SideNavLink>
-          <SideNavLink
-            onClick={toggle}
-            to="/dashboard/admin/ratings"
-            name="Ratings"
-          >
-            <ClipboardListIcon className="w-5 mr-2 dark:text-dark-text-fill" />
-          </SideNavLink>
-          <SideNavLink
-            onClick={toggle}
-            to="/dashboard/updated-ratings"
-            name="Updated Ratings"
-          >
-            <RefreshIcon className="w-5 mr-2 dark:text-dark-text-fill" />
-          </SideNavLink>
-          <SideNavLink
-            onClick={toggle}
-            to="/dashboard/grading"
-            name="Grading System"
-          >
-            <TemplateIcon className="w-5 mr-2 dark:text-dark-text-fill" />
-          </SideNavLink>
-          <SideNavLink
-            onClick={toggle}
-            to="/dashboard/manage"
-            name="Roles & Access"
-          >
-            <KeyIcon className="w-5 mr-2 dark:text-dark-text-fill" />
-          </SideNavLink>
+          {departments.map((department) => (
+            <SideNavLink
+              key={department.id} // Make sure to provide a unique key prop
+              onClick={toggle}
+              to={`/dashboard/manager/${department.name}`}
+              name={`${department.name} Services`}
+            >
+              <Icon
+                icon="carbon:bar"
+                className="w-5 mr-2 dark:text-dark-text-fill text-lg"
+              />
+            </SideNavLink>
+          ))}
         </CheckRole>
 
         {/* FOR ACCOUNTANTS */}

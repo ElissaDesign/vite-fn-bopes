@@ -123,13 +123,13 @@ export default function Topbar() {
             <Popover placement="top-start">
               <PopoverTrigger>
                 <div
-                  className="w-8 h-8 bg-gray-200 rounded-full flex justify-center items-center text-white hover:bg-gray-200 hover:text-blue
+                  className="w-8 h-8 bg-gray-200 rounded-full flex justify-center items-center text-white hover:bg-dark-frame-bg hover:text-blue
                transition-all duration-300 cursor-pointer"
                 >
                   D
                 </div>
               </PopoverTrigger>
-              <PopoverContent className="p-6 dark:bg-dark-bg dark: text-dark-text-fill">
+              <PopoverContent className="p-6 dark:bg-dark-bg dark:text-dark-text-fill">
                 <PopoverHeader fontWeight="semibold">
                   Elissa Design
                 </PopoverHeader>

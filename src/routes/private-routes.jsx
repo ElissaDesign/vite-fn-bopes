@@ -24,6 +24,7 @@ const Employees = React.lazy(() => import("../private-pages/admin/employees"));
 const BarAccountant = React.lazy(() =>
   import("../private-pages/accountant/bar")
 );
+const BarManager = React.lazy(() => import("../private-pages/manager/bar"));
 const RestaurantAccountant = React.lazy(() =>
   import("../private-pages/accountant/restaurant")
 );
@@ -49,7 +50,7 @@ export default function PrivateRoutes() {
 
   return (
     <RequireAuth>
-      <div className="flex flex-col  min-h-screen dark:bg-dark-frame-bg">
+      <div className="flex flex-col  h-full dark:bg-dark-frame-bg">
         <Topbar />
         <div className="flex flex-col lg:flex-row ">
           <div className="lg:basis-[15%]">
@@ -72,6 +73,14 @@ export default function PrivateRoutes() {
                   <Route path="/employees" element={<Employees />} />
                   <Route
                     path="/accountant/bar"
+                    element={<BarAccountant department={activeservice} />}
+                  />
+                  <Route
+                    path="/manager/bar"
+                    element={<BarManager department={activeservice} />}
+                  />
+                  <Route
+                    path="/manager/restaurant"
                     element={<BarAccountant department={activeservice} />}
                   />
                   <Route

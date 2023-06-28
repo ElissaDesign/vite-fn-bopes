@@ -9,11 +9,11 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import Button from "../../components/button";
-import BarProduct from "../../components/create-bar-product-request";
+import BarProduct from "../../components/create-bar-product";
 import { Icon } from "@iconify/react";
 import {
-  useDeleteBarProductRequestMutation,
-  useGetBarProductsRequestQuery,
+  useDeleteProductMutation,
+  useGetProductsQuery,
 } from "../../redux/api/apiSlice";
 import DataTable from "../../components/data-table";
 import moment from "moment";
@@ -37,15 +37,15 @@ export default function BarAccountant({ department }) {
     onClose: closeNewDrinkModal,
   } = useDisclosure();
 
-  const { data } = useGetBarProductsRequestQuery(department?.id, {
+  const { data, isLoading } = useGetProductsQuery(department?.id, {
     pollingInterval: 3000,
     refetchOnMountOrArgChange: true,
     refetchOnFocus: true,
     refetchOnReconnect: true,
   });
-  console.log("Products", data);
+  console.log("Products", product);
 
-  const [deleteBarProductRequest] = useDeleteBarProductRequestMutation();
+  const [deleteProduct] = useDeleteProductMutation();
 
   const handleClickUpdate = async (row) => {
     setProduct(row.original);
@@ -142,7 +142,7 @@ export default function BarAccountant({ department }) {
             color="#148fb6"
             onClick={async () => {
               try {
-                const deletedproduct = await deleteBarProductRequest(
+                const deletedproduct = await deleteProduct(
                   row?.original.id
                 ).unwrap();
                 console.log(deletedproduct);
@@ -173,14 +173,10 @@ export default function BarAccountant({ department }) {
       const date = moment(data?.createdAt);
       const formattedDate = date.format("MMMM Do, YYYY, h:mm:ss A");
       const totalPrice = data?.purchasingPrice * data?.quantity;
-      const barProduct = data?.barProduct.map((product) => {
-        return product.drinkName;
-      });
-
       datum[index] = {};
       datum[index].date = formattedDate;
       datum[index].id = data.id;
-      datum[index].drinkName = barProduct;
+      datum[index].drinkName = data.drinkName;
       datum[index].purchasingPrice = data.purchasingPrice;
       datum[index].quantity = data.quantity;
       datum[index].totalPrice = totalPrice;

@@ -100,7 +100,7 @@ export default function Customers() {
     });
   }
   return (
-    <div className="bg-[#f8f9fc] dark:bg-dark-frame-bg px-[25px] pt-[72px] ">
+    <div className="bg-[#f8f9fc] dark:bg-dark-frame-bg h-screen px-[25px] pt-[72px] ">
       <div className="flex items-center justify-between">
         <h1 className="text-[#5a5c69] dark:text-dark-text-fill text-[28px] leading-[34px] font-normal cursor-pointer">
           Customers

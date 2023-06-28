@@ -6,12 +6,9 @@ import { Input, Select, Spinner } from "@chakra-ui/react";
 import Button from "./button";
 
 import {
-  useCreateProductMutation,
-  useCreateTransactionMutation,
-  useGetProductQuery,
-  useGetProductsQuery,
-  useUpdateProductMutation,
-  useUpdateTransactionMutation,
+  useCreateBarTransactionMutation,
+  useGetBarProductsPurchasedQuery,
+  useUpdateBarTransactionMutation,
 } from "../redux/api/apiSlice";
 import { errorToast, successToast } from "../hooks/toast-messages";
 
@@ -19,43 +16,43 @@ export default function BarTransaction({ department, product }) {
   console.log("Department on Model: " + department.id);
   console.log("Product on Model: " + product);
 
-  const [createTransaction, createTransactionInfo] =
-    useCreateTransactionMutation();
-  const [updateTransaction, updateTransactionInfo] =
-    useUpdateTransactionMutation();
+  const [createBarTransaction, createTransactionInfo] =
+    useCreateBarTransactionMutation();
+  const [updateBarTransaction, updateTransactionInfo] =
+    useUpdateBarTransactionMutation();
 
   const createTransactionLoading = createTransactionInfo.isLoading;
   const updateTransactionLoading = updateTransactionInfo.isLoading;
 
-  const { data } = useGetProductsQuery(department?.id, {
+  const { data } = useGetBarProductsPurchasedQuery(department?.id, {
     pollingInterval: 5000,
     refetchOnMountOrArgChange: true,
     refetchOnFocus: true,
     refetchOnReconnect: true,
   });
 
-  const [clientName, setClientName] = useState(product?.drinkName || "");
-  const [units, setUnits] = useState(product?.drinkName || "");
-  const [descr, setDescr] = useState(product?.purchasingPrice || "");
-  const [phone, setPhone] = useState(product?.purchasingPrice || "");
-  const [status, setStatus] = useState(product?.quantity || "");
-  const [productId, setProductId] = useState(product?.quantity || "");
+  const [clientName, setClientName] = useState(product?.clientName || "");
+  const [units, setUnits] = useState(product?.units || "");
+  const [descr, setDescr] = useState(product?.descr || "");
+  const [phone, setPhone] = useState(product?.phone || "");
+  const [status, setStatus] = useState(product?.status || "");
+  const [barProductId, setProductId] = useState(product?.barProductId || "");
 
-  const CreateTransaction = async (e) => {
+  const CreateBarTransaction = async (e) => {
     e.preventDefault();
 
-    if (!clientName || !units || !descr || !status || !productId) {
+    if (!clientName || !units || !descr || !status || !barProductId) {
       return errorToast("Fill all required fields");
     }
 
     try {
-      const newdata = await createTransaction({
+      const newdata = await createBarTransaction({
         clientName,
         units,
         descr,
         phone,
         status,
-        productId,
+        barProductId,
       }).unwrap();
       console.log("User Invitation:", newdata);
       successToast(newdata?.message || "Created");
@@ -64,21 +61,23 @@ export default function BarTransaction({ department, product }) {
       errorToast(error?.data.message || "Try again");
     }
   };
-  const UpdateTransaction = async (e) => {
+  const UpdateBarTransaction = async (e) => {
     e.preventDefault();
 
-    if (!clientName || !units || !descr || !status || !productId) {
+    if (!clientName || !units || !descr || !status || !barProductId) {
       return errorToast("Fill all required fields");
     }
-    console.log("Fill all required fields", product.id);
     try {
-      const newdata = await updateTransaction({
-        clientName,
-        units,
-        descr,
-        phone,
-        status,
-        productId,
+      const newdata = await updateBarTransaction({
+        transactionId: product?.id,
+        transaction: {
+          clientName,
+          units,
+          descr,
+          phone,
+          status,
+          barProductId,
+        },
       }).unwrap();
       console.log("User Invitation:", newdata);
       successToast(newdata?.message || "Updated");
@@ -98,7 +97,7 @@ export default function BarTransaction({ department, product }) {
             <p className="text-gray font-medium text-base py-2">Product Name</p>
             <Select
               placeholder="Select product"
-              defaultValue={productId}
+              defaultValue={barProductId}
               onBlur={(e) => setProductId(e.target.value)}
               className="dark:bg-dark-bg"
             >
@@ -168,11 +167,11 @@ export default function BarTransaction({ department, product }) {
               className="dark:bg-dark-bg"
             >
               <>
-                <option value="pending" className="dark:bg-dark-bg">
-                  Pending
+                <option value="unpaid" className="dark:bg-dark-bg">
+                  Unpaid
                 </option>
-                <option value="complete " className="dark:bg-dark-bg">
-                  Complete
+                <option value="paid" className="dark:bg-dark-bg">
+                  Paid
                 </option>
               </>
             </Select>
@@ -181,12 +180,12 @@ export default function BarTransaction({ department, product }) {
           </div>
 
           <Button
-            onClick={product ? UpdateTransaction : CreateTransaction}
+            onClick={product ? UpdateBarTransaction : CreateBarTransaction}
             variant="primary"
             size="lg"
             style="mt-2 lg:mt-5 px-4 text-xl font-normal w-full "
             disabled={
-              !clientName && !units && !descr && !status && !productId
+              !clientName && !units && !descr && !status && !barProductId
                 ? true
                 : false
             }

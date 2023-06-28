@@ -49,17 +49,17 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="dark:bg-dark-bg">
+    <div className="dark:bg-dark-bg h-screen">
       <Navbar />
 
       <div className="w-[90%] md:w-2/5 mx-auto pt-20 dark:bg-dark-bg dark:text-dark-text-fill bg-white">
-        <div className="mt-20">
-          <p className="text-gray-800 text-center text-lg font-semibold">
+        <div className="mt-20 ">
+          <p className="text-gray-800 dark:text-dark-text-fill text-center text-lg font-semibold">
             Sign in to your account 🌞
           </p>
 
-          <div className="mt-8">
-            <p className="text-gray-800 font-medium text-base py-2">
+          <div className="mt-8 ">
+            <p className="text-gray-800 dark:text-dark-text-fill font-medium text-base py-2">
               Your email address
             </p>
             <Input
@@ -71,7 +71,7 @@ export default function SignupPage() {
           </div>
 
           <div className="mt-6">
-            <p className="text-gray-800 font-medium text-base pb-2">
+            <p className="text-gray-800 dark:text-dark-text-fill font-medium text-base pb-2">
               Your password
             </p>
             <InputGroup size="md">
