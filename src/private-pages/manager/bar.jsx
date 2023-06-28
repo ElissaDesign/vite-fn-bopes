@@ -9,7 +9,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import Button from "../../components/button";
-import BarProduct from "../../components/create-bar-product";
+import BarProduct from "../../components/create-bar-product-request";
 import { Icon } from "@iconify/react";
 import {
   useDeleteProductMutation,
