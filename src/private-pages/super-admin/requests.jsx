@@ -79,12 +79,8 @@ export default function Requests() {
   const columns = [
     { Header: "Date", accessor: "date" },
     { Header: "Company", accessor: "company" },
-    { Header: "Business Type", accessor: "businessType" },
     { Header: "Email", accessor: "email" },
-    { Header: "Phone", accessor: "phone" },
     { Header: "Name", accessor: "name" },
-    { Header: "Address", accessor: "address" },
-    { Header: "Website", accessor: "website" },
     {
       Header: "Action",
       accessor: "",
