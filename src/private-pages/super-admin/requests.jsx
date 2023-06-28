@@ -137,7 +137,7 @@ export default function Requests() {
   if (requests && requests?.length > 0) {
     requests?.map((data, index) => {
       const date = moment(data?.createdAt);
-      const formattedDate = date.format("dddd, MMMM Do, YYYY, h:mm:ss A");
+      const formattedDate = date.format("MMMM Do, YYYY, h:mm:ss A");
       console.log(formattedDate);
       datum[index] = {};
       datum[index].date = formattedDate;
