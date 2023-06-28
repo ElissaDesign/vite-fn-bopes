@@ -138,7 +138,7 @@ export default function Employees() {
     data?.data?.map((data, index) => {
       const services = data?.services?.map((obj) => `${obj.name}`);
       const nonArrayString = "Assiged: ";
-      const result = nonArrayString + " " + services.join(" ");
+      const result = nonArrayString + " " + services?.join(" ");
       datum[index] = {};
       datum[index].name = data.name;
       datum[index].email = data.email;
