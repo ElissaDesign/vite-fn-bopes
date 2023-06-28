@@ -173,6 +173,9 @@ export const apiSlice = createApi({
     getProducts: builder.query({
       query: (departmentId) => `/products/products/${departmentId}`,
     }),
+    getBarProductsPurchased: builder.query({
+      query: (serviceId) => `/products/${serviceId}/purchased`,
+    }),
     getProduct: builder.query({
       query: (productId) => `/products/${productId}`,
     }),
@@ -200,18 +203,49 @@ export const apiSlice = createApi({
       },
     }),
 
+    //Bar Product Request services
+    getBarProductsRequest: builder.query({
+      query: (serviceId) => `/products/request/products/${serviceId}`,
+    }),
+    getBarProductRequest: builder.query({
+      query: (productId) => `/products/request/${productId}`,
+    }),
+    createBarProductRequest: builder.mutation({
+      query: (product) => ({
+        url: "/products/request",
+        method: "POST",
+        body: product,
+      }),
+    }),
+    deleteBarProductRequest: builder.mutation({
+      query: (barProductRequestId) => ({
+        url: `/products/request/${barProductRequestId}`,
+        method: "DELETE",
+      }),
+    }),
+    updateBarProductRequest: builder.mutation({
+      query: (args) => {
+        const { productId, product } = args;
+        return {
+          url: `/products/${productId}`,
+          method: "PATCH",
+          body: product,
+        };
+      },
+    }),
+
     // Transations
-    createTransaction: builder.mutation({
+    createBarTransaction: builder.mutation({
       query: (transaction) => ({
         url: "/transactions",
         method: "POST",
         body: transaction,
       }),
     }),
-    getEmployeeTransations: builder.query({
+    getEmployeeBarTransations: builder.query({
       query: () => `/transactions/transactions`,
     }),
-    updateTransaction: builder.mutation({
+    updateBarTransaction: builder.mutation({
       query: (args) => {
         const { transactionId, transaction } = args;
         return {
@@ -259,12 +293,20 @@ export const {
   // Products
   useCreateProductMutation,
   useGetProductsQuery,
+  useGetBarProductsPurchasedQuery,
   useDeleteProductMutation,
   useGetProductQuery,
   useUpdateProductMutation,
 
+  //Bar Products Request
+  useCreateBarProductRequestMutation,
+  useGetBarProductsRequestQuery,
+  useDeleteBarProductRequestMutation,
+  useGetBarProductRequestQuery,
+  useUpdateBarProductRequestMutation,
+
   // Transactions
-  useGetEmployeeTransationsQuery,
-  useCreateTransactionMutation,
-  useUpdateTransactionMutation,
+  useGetEmployeeBarTransationsQuery,
+  useCreateBarTransactionMutation,
+  useUpdateBarTransactionMutation,
 } = apiSlice;

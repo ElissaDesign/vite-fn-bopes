@@ -12,6 +12,7 @@ import Button from "../../components/button";
 import { Icon } from "@iconify/react";
 import {
   useDeleteProductMutation,
+  useGetEmployeeBarTransationsQuery,
   useGetProductsQuery,
 } from "../../redux/api/apiSlice";
 import DataTable from "../../components/data-table";
@@ -19,36 +20,62 @@ import moment from "moment";
 import { useState } from "react";
 import { errorToast, successToast } from "../../hooks/toast-messages";
 import BarTransaction from "../../components/create-bar-transaction";
+import BarTransactionsDetails from "../../components/bar-transactions-details";
 
 export default function BarEmployee({ department }) {
   const [product, setProduct] = useState();
 
-  console.log("productId", product);
   const {
     isOpen: newDrinkModalOpen,
     onOpen: openNewDrinkModal,
     onClose: closeNewDrinkModal,
   } = useDisclosure();
 
-  const { data, isLoading } = useGetProductsQuery(department?.id, {
-    // pollingInterval: 9000,
+  const {
+    isOpen: transactionsDetailsModalOpen,
+    onOpen: openTransactionsDetailsModal,
+    onClose: closeTransactionsDetailsModal,
+  } = useDisclosure();
+
+  // const { data, isLoading } = useGetProductsQuery(department?.id, {
+  //   pollingInterval: 9000,
+  //   refetchOnMountOrArgChange: true,
+  //   refetchOnFocus: true,
+  //   refetchOnReconnect: true,
+  // });
+
+  const transactions = useGetEmployeeBarTransationsQuery({
+    pollingInterval: 9000,
     refetchOnMountOrArgChange: true,
     refetchOnFocus: true,
     refetchOnReconnect: true,
   });
-  console.log("Products", product);
+
+  console.log(transactions?.data?.data);
 
   const [deleteProduct] = useDeleteProductMutation();
 
   const handleClickUpdate = async (row) => {
     setProduct(row.original);
+    console.log(row.original);
     openNewDrinkModal();
 
     // Wait for both operations to complete
     await Promise.all([setProduct(row.original), openNewDrinkModal()]);
 
     // Your code to run after both operations are completed
-    console.log("Both operations completed.");
+  };
+  const handleClickDetails = async (row) => {
+    setProduct(row.original);
+    openTransactionsDetailsModal();
+
+    // Wait for both operations to complete
+    await Promise.all([
+      setProduct(row.original),
+      openTransactionsDetailsModal(),
+    ]);
+
+    // Your code to run after both operations are completed
   };
 
   const handleClickNewDrink = async () => {
@@ -59,7 +86,6 @@ export default function BarEmployee({ department }) {
     await Promise.all([setProduct(), openNewDrinkModal()]);
 
     // Your code to run after both operations are completed
-    console.log("Both operations completed.");
   };
 
   const ModelNewDrink = (
@@ -74,15 +100,28 @@ export default function BarEmployee({ department }) {
       </ModalContent>
     </Modal>
   );
+  const ModelClientDetails = (
+    <Modal
+      isOpen={transactionsDetailsModalOpen}
+      onClose={closeTransactionsDetailsModal}
+    >
+      <ModalOverlay />
+      <ModalContent className=" dark:bg-dark-bg dark:text-dark-text-fill">
+        <ModalHeader className="text-center">UnPaid Transactions</ModalHeader>
+        <ModalCloseButton />
+        <ModalBody>
+          <BarTransactionsDetails department={department} product={product} />
+        </ModalBody>
+      </ModalContent>
+    </Modal>
+  );
 
   const columns = [
     { Header: "Date", accessor: "date" },
-    { Header: "Name", accessor: "drinkType" },
-    { Header: "Drink Name", accessor: "drinkName" },
-    { Header: "Purchase Price", accessor: "purchasingPrice" },
-    { Header: "Quantity", accessor: "quantity" },
-    { Header: "Total Price", accessor: "totalPrice" },
-    { Header: "Sale on", accessor: "sellingPrice" },
+    { Header: "Client Name", accessor: "clientName" },
+    { Header: "Drink", accessor: "drinkName" },
+    { Header: "Quantity", accessor: "units" },
+    { Header: "Total price", accessor: "totalPrice" },
     { Header: "Status", accessor: "status" },
 
     {
@@ -91,7 +130,8 @@ export default function BarEmployee({ department }) {
       Cell: ({ row }) => (
         <div
           className={
-            " items-center" + (data?.data.length > 0 ? " flex" : " hidden")
+            " items-center" +
+            (transactions?.data?.data.length > 0 ? " flex" : " hidden")
           }
         >
           <Icon
@@ -115,10 +155,8 @@ export default function BarEmployee({ department }) {
                 const deletedproduct = await deleteProduct(
                   row?.original.id
                 ).unwrap();
-                console.log(deletedproduct);
                 successToast(deletedproduct?.message);
               } catch (error) {
-                console.log(error);
                 errorToast(error?.data.message);
               }
             }}
@@ -130,7 +168,7 @@ export default function BarEmployee({ department }) {
             height="30"
             cursor="pointer"
             color="#148fb6"
-            // onClick={() => handleClickOpen(row.original.email)}
+            onClick={() => handleClickDetails(row)}
           />
         </div>
       ),
@@ -138,20 +176,26 @@ export default function BarEmployee({ department }) {
   ];
 
   let datum = [];
-  if (data && data?.data?.length > 0) {
-    data?.data.map((data, index) => {
+  if (transactions?.data && transactions?.data?.data.length > 0) {
+    transactions?.data.data.map((data, index) => {
       const date = moment(data?.createdAt);
       const formattedDate = date.format("MMMM Do, YYYY, h:mm:ss A");
-      const totalPrice = data?.purchasingPrice * data?.quantity;
+      const totalPrice = data.unitPrice * data.units;
+      const drinkname = data.barProduct.map((product) => {
+        return product.drinkName;
+      });
+
       datum[index] = {};
       datum[index].date = formattedDate;
       datum[index].id = data.id;
-      datum[index].drinkType = data.drinkType;
-      datum[index].drinkName = data.drinkName;
-      datum[index].purchasingPrice = data.purchasingPrice;
-      datum[index].quantity = data.quantity;
+      datum[index].clientName = data.clientName;
+      datum[index].drinkName = drinkname;
+      datum[index].units = data.units;
       datum[index].totalPrice = totalPrice;
       datum[index].status = data.status;
+      datum[index].phone = data.phone;
+      datum[index].descr = data.descr;
+      datum[index].barProductId = data.barProductId;
     });
   }
 
@@ -175,15 +219,17 @@ export default function BarEmployee({ department }) {
 
       <div className="mt-[25px] pb-[15px]">
         <DataTable
-          data={data?.data.length > 0 ? datum : [{}]}
+          data={transactions?.data?.data.length > 0 ? datum : [{}]}
           columns={columns}
-          title="Purchase Request List"
+          title="Transactions List"
         />
       </div>
 
       <div>
         {/* Model for creating new drink */}
         {ModelNewDrink}
+        {/* Model client ditails */}
+        {ModelClientDetails}
       </div>
     </div>
   );

@@ -3,7 +3,7 @@ import Navbar from "../components/navBar";
 
 export default function LandingPage() {
   return (
-    <div>
+    <div className="dark:bg-dark-bg">
       <Navbar />
 
       <Hero />

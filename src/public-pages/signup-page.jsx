@@ -42,10 +42,10 @@ const Register = () => {
   };
 
   return (
-    <div className="dark:bg-dark-bg h-screen">
+    <div className="dark:bg-dark-bg h-full">
       <Navbar />
 
-      <div className="dark:bg-dark-bg md:w-[80%] w-[90%] mx-auto">
+      <div className="dark:bg-dark-bg dark:text-dark-text-fill md:w-[80%] w-[90%] mx-auto">
         <div className="mt-20 px-6 pt-[20px] dark:bg-dark-bg text-center">
           <h1 className="font-bold text-2xl my-4 text-center">
             Welcome to our web app system!{" "}

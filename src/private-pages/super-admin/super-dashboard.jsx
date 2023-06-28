@@ -62,7 +62,7 @@ const data = [
 // bg-[#f8f9fc] dark:bg-dark-frame-bg pt-[25px] px-[25px] flex flex-col grow
 export default function SuperDashboard() {
   return (
-    <div className=" bg-light-bg dark:bg-dark-frame-bg px-[25px] pt-[72px]">
+    <div className=" bg-light-bg dark:bg-dark-frame-bg h-full px-[25px] pt-[72px]">
       <div className="flex flex-row pb-8 justify-center">
         <div className="lg:ml-44 w-[90%] pt-[4vh] lg:pt-[6vh]">
           <div className="flex items-center justify-between">

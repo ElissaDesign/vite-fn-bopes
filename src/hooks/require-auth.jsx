@@ -1,25 +1,30 @@
 /* eslint-disable react/prop-types */
-import React from "react";
-import { Navigate, useLocation } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import checkTokenExpiration from "./token-validate";
 import UserHook from "./user-hook";
 
 function RequireAuth({ children, ...props }) {
   checkTokenExpiration();
   UserHook();
+  const navigate = useNavigate();
   const AuthToken = localStorage.getItem("auth_token");
-  const location = useLocation();
+
+  useEffect(() => {
+    if (!AuthToken) {
+      const loginPath = "/auth/login";
+      const currentPath = window.location.pathname;
+      if (currentPath !== loginPath) {
+        navigate(loginPath, { replace: true, state: currentPath });
+      }
+    }
+  }, [AuthToken, navigate]);
+
   if (AuthToken) {
     return <React.Fragment {...props}>{children}</React.Fragment>;
   }
-  return (
-    <Navigate
-      {...props}
-      to="auth/login"
-      state={location.pathname}
-      replace={true}
-    />
-  );
+
+  return null;
 }
 
 export default RequireAuth;

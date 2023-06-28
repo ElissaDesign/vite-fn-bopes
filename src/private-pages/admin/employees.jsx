@@ -136,9 +136,9 @@ export default function Employees() {
   let datum = [];
   if (data?.data && data?.data.length > 0) {
     data?.data.map((data, index) => {
-      const departments = data?.departments.map((obj) => `${obj.name}`);
+      const services = data?.services.map((obj) => `${obj.name}`);
       const nonArrayString = "Assiged: ";
-      const result = nonArrayString + " " + departments.join(" ");
+      const result = nonArrayString + " " + services.join(" ");
       datum[index] = {};
       datum[index].name = data.name;
       datum[index].email = data.email;
@@ -149,7 +149,7 @@ export default function Employees() {
   }
 
   return (
-    <div className="px-[25px] pt-[72px]">
+    <div className="px-[25px] pt-[72px] h-screen">
       <div className="flex flex-col md:flex-row items-center justify-between">
         <h1 className="text-gray-800  dark:text-dark-text-fill text-[28px] leading-[34px] font-semibold cursor-pointer">
           Employees

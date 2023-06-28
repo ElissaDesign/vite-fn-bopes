@@ -11,7 +11,7 @@ export default function ManagerDashboard() {
   });
 
   return (
-    <div className="px-[25px] pt-[72px]">
+    <div className="px-[25px] pt-[72px] h-screen">
       <div className="flex justify-center items-center">
         {isFetching ? (
           <div>
