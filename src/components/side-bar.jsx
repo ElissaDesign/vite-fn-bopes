@@ -40,10 +40,20 @@ function Sidebar({ style, toggle }) {
     setDarkSide(checked);
   };
   const [togglei, setTogglei] = useState(false);
+  const [departments, setDepartments] = useState([]);
+
   useEffect(() => {}, [togglei]);
 
-  const departments = JSON.parse(localStorage.getItem("departments") || "[]");
-  console.log("mmg hgarfkwg wehmgwhgdchw", departments);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const departments = JSON.parse(localStorage.getItem("departments"));
+      setDepartments(departments);
+      console.log("Interval executed!");
+    }, 2000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // console.log("mmg hgarfkwg wehmgwhgdchw", departments);
 
   // const { data, isLoading } = useGetAllDepartmentsUserHaveQuery({
   //   pollingInterval: 2000,
@@ -128,7 +138,7 @@ function Sidebar({ style, toggle }) {
 
         {/* FOR MANAGERS */}
         <CheckRole roles={["manager"]}>
-          {departments.map((department) => (
+          {departments?.map((department) => (
             <SideNavLink
               key={department.id} // Make sure to provide a unique key prop
               onClick={toggle}
@@ -145,7 +155,7 @@ function Sidebar({ style, toggle }) {
 
         {/* FOR ACCOUNTANTS */}
         <CheckRole roles={["accountant"]}>
-          {departments.map((department) => (
+          {departments?.map((department) => (
             <SideNavLink
               key={department.id} // Make sure to provide a unique key prop
               onClick={toggle}
@@ -162,7 +172,7 @@ function Sidebar({ style, toggle }) {
 
         {/* FOR EMPLOYEES */}
         <CheckRole roles={["user"]}>
-          {departments.map((department) => (
+          {departments?.map((department) => (
             <SideNavLink
               key={department.id} // Make sure to provide a unique key prop
               onClick={toggle}

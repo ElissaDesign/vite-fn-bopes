@@ -5,6 +5,7 @@ import registerSlice from "./slices/registerSlice";
 import currentUserSlice from "./slices/current-userSlice";
 import usersSlice from "./slices/usersSlice";
 import requestsSlice from "./slices/requestsSlice";
+import barPurchaseRequest from "./slices/barPurchaseRequest";
 
 const store = configureStore({
   reducer: {
@@ -13,6 +14,7 @@ const store = configureStore({
     login: loginSlice,
     users: usersSlice,
     requests: requestsSlice,
+    barPurchaseRequest: barPurchaseRequest,
     [apiSlice.reducerPath]: apiSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
