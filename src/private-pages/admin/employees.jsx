@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import {
   Modal,
   ModalBody,
@@ -14,8 +16,12 @@ import { useGetAllUsersWithDepartmentsQuery } from "../../redux/api/apiSlice";
 import RegisterMember from "../../components/user-register";
 import { Icon } from "@iconify/react";
 import DataTable from "../../components/data-table";
+import { getEmployees } from "../../redux/slices/employeesSlice";
 
 export default function Employees() {
+  const dispatch = useDispatch();
+  const employees = useSelector((state) => state.employees.data);
+
   const {
     isOpen: inviteEmployeeModalOpen,
     onOpen: openInviteEmployeeModal,
@@ -35,8 +41,11 @@ export default function Employees() {
     refetchOnFocus: true,
     refetchOnReconnect: true,
   });
+  useEffect(() => {
+    dispatch(getEmployees(data?.data));
+  }, [data, dispatch]);
 
-  console.log(data);
+  console.log("Emplyees", data);
 
   const ModelInviteEmployee = (
     <Modal isOpen={inviteEmployeeModalOpen} onClose={closeInviteEmployeeModal}>
@@ -134,8 +143,8 @@ export default function Employees() {
     },
   ];
   let datum = [];
-  if (data?.data && data?.data.length > 0) {
-    data?.data?.map((data, index) => {
+  if (employees && employees?.length > 0) {
+    employees?.map((data, index) => {
       const services = data?.services?.map((obj) => `${obj.name}`);
       const nonArrayString = "Assiged: ";
       const result = nonArrayString + " " + services?.join(" ");
@@ -174,11 +183,13 @@ export default function Employees() {
         </div>
       </div>
       <div className="mt-[25px] pb-[15px]">
-        <DataTable
-          data={data?.data.length > 0 ? datum : [{}]}
-          columns={columns}
-          title="Customers List"
-        />
+        {datum?.length !== 0 ? (
+          <DataTable data={datum} columns={columns} title="Employees List" />
+        ) : (
+          <div className="text-center mt-48 text-lg uppercase">
+            <p> No Employees list found</p>
+          </div>
+        )}
       </div>
 
       <div>

@@ -7,15 +7,15 @@ const initialState = {
 };
 
 const barPurchaseRequestSlice = createSlice({
-  name: "barPurchaseRequest",
+  name: "barpurchaserequest",
   initialState,
   reducers: {
-    barPurchaseRequest: (state, { payload }) => {
+    getBarPurchaseRequest: (state, { payload }) => {
       state.data = payload;
     },
   },
 });
 
-export const { barPurchaseRequest } = barPurchaseRequestSlice.actions;
+export const { getBarPurchaseRequest } = barPurchaseRequestSlice.actions;
 
 export default barPurchaseRequestSlice.reducer;

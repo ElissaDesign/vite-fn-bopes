@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+import { useSelector, useDispatch } from "react-redux";
 import {
   Modal,
   ModalBody,
@@ -17,14 +18,20 @@ import {
 } from "../../redux/api/apiSlice";
 import DataTable from "../../components/data-table";
 import moment from "moment";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { errorToast, successToast } from "../../hooks/toast-messages";
 import BarProductCreation from "../../components/bar-product";
+import { getBarPurchaseRequest } from "../../redux/slices/barPurchaseRequestSlice";
 
 export default function BarAccountant({ department }) {
+  const dispatch = useDispatch();
+  const barpurchaserequest = useSelector(
+    (state) => state.barpurchaserequest?.data
+  );
+
   const [product, setProduct] = useState();
 
-  console.log("productId", product);
+  console.log("productId", barpurchaserequest);
   const {
     isOpen: newDrinkRequestModalOpen,
     onOpen: openNewDrinkRequestModal,
@@ -43,11 +50,15 @@ export default function BarAccountant({ department }) {
     refetchOnFocus: true,
     refetchOnReconnect: true,
   });
-  console.log("Products", data);
+
+  useEffect(() => {
+    dispatch(getBarPurchaseRequest(data?.data));
+  }, [data, dispatch]);
 
   const [deleteBarProductRequest] = useDeleteBarProductRequestMutation();
 
   const handleClickUpdate = async (row) => {
+    console.log("Dettt", row);
     setProduct(row.original);
     openNewDrinkRequestModal();
 
@@ -121,7 +132,8 @@ export default function BarAccountant({ department }) {
       Cell: ({ row }) => (
         <div
           className={
-            " items-center" + (data?.data.length > 0 ? " flex" : " hidden")
+            " items-center" +
+            (barpurchaserequest.length > 0 ? " flex" : " hidden")
           }
         >
           <Icon
@@ -168,19 +180,24 @@ export default function BarAccountant({ department }) {
   ];
 
   let datum = [];
-  if (data && data?.data?.length > 0) {
-    data?.data.map((data, index) => {
+
+  if (barpurchaserequest && barpurchaserequest?.length > 0) {
+    barpurchaserequest?.map((data, index) => {
       const date = moment(data?.createdAt);
       const formattedDate = date.format("MMMM Do, YYYY, h:mm:ss A");
       const totalPrice = data?.purchasingPrice * data?.quantity;
-      const barProduct = data?.barProduct.map((product) => {
-        return product.drinkName;
-      });
+      const barProduct = data?.barProduct.reduce((result, product) => {
+        return {
+          barproduct: product.drinkName,
+          barProductId: product.id,
+        };
+      }, {});
 
       datum[index] = {};
       datum[index].date = formattedDate;
       datum[index].id = data.id;
-      datum[index].drinkName = barProduct;
+      datum[index].drinkName = barProduct.barproduct;
+      datum[index].barProductId = barProduct.barProductId;
       datum[index].purchasingPrice = data.purchasingPrice;
       datum[index].quantity = data.quantity;
       datum[index].totalPrice = totalPrice;
@@ -189,7 +206,7 @@ export default function BarAccountant({ department }) {
   }
 
   return (
-    <div className="px-[25px] pt-[72px]">
+    <div className="h-screen dark:bg-dark-frame-bg px-[25px] pt-[72px]">
       <div className="flex items-center flex-row justify-between">
         <h1 className="text-gray-800  dark:text-dark-text-fill text-[28px] leading-[34px] font-semibold cursor-pointer">
           Drinks
@@ -215,11 +232,17 @@ export default function BarAccountant({ department }) {
       </div>
 
       <div className="mt-[25px] pb-[15px]">
-        <DataTable
-          data={data?.data.length > 0 ? datum : [{}]}
-          columns={columns}
-          title="Purchase Request List"
-        />
+        {datum?.length !== 0 ? (
+          <DataTable
+            data={datum}
+            columns={columns}
+            title="Purchase Request List"
+          />
+        ) : (
+          <div className="text-center mt-48 text-lg uppercase">
+            <p> No purchase requests found</p>
+          </div>
+        )}
       </div>
 
       <div>

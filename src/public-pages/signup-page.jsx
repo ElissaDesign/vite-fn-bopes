@@ -1,12 +1,26 @@
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/no-children-prop */
 import { useState } from "react";
-import { Spinner } from "@chakra-ui/react";
+import {
+  InputGroup,
+  InputLeftElement,
+  Input,
+  InputRightAddon,
+  InputLeftAddon,
+  Textarea,
+  Spinner,
+} from "@chakra-ui/react";
 import { TiPointOfInterest } from "react-icons/ti";
 import { errorToast, successToast } from "../hooks/toast-messages";
 import { useCreateRequestMutation } from "../redux/api/apiSlice";
 import Navbar from "../components/navBar";
 import Button from "../components/button";
+import {
+  BsFillBuildingsFill,
+  BsFillEnvelopeAtFill,
+  BsFillPinMapFill,
+  BsTelephoneFill,
+} from "react-icons/bs";
 
 const Register = () => {
   const [createRequest, { isLoading }] = useCreateRequestMutation();
@@ -42,11 +56,11 @@ const Register = () => {
   };
 
   return (
-    <div className="dark:bg-dark-bg h-full">
+    <div className="h-[100%] dark:bg-dark-bg ">
       <Navbar />
 
       <div className="dark:bg-dark-bg dark:text-dark-text-fill md:w-[80%] w-[90%] mx-auto">
-        <div className="mt-20 px-6 pt-[20px] dark:bg-dark-bg text-center">
+        <div className="mt-20 px-6 pt-[20px] dark:bg-dark-bg">
           <h1 className="font-bold text-2xl my-4 text-center">
             Welcome to our web app system!{" "}
           </h1>
@@ -61,31 +75,34 @@ const Register = () => {
             Please provide the following details:
           </h1>
 
-          <div className="border rounded p-2">
-            <form action="" className="flex flex-col" onSubmit={onSubmit}>
-              <div>
-                <p className="text-gray-700">
+          <div className="border rounded p-4">
+            <form onSubmit={onSubmit}>
+              <div className="">
+                <p className="text-gray-700 dark:text-dark-text-fill my-2">
                   {" "}
                   Enter your company's official name
                 </p>
-                <input
-                  type="text"
-                  className="border rounded-sm my-2 py-2 px-2 font-medium w-full"
-                  placeholder="Company name"
-                  value={company}
-                  required
-                  onChange={(e) => setCompany(e.target.value)}
-                />
+                <InputGroup>
+                  <InputLeftElement pointerEvents="none">
+                    <BsFillBuildingsFill color="gray.300" />
+                  </InputLeftElement>
+                  <Input
+                    type="text"
+                    placeholder="Company name"
+                    value={company}
+                    required
+                    onChange={(e) => setCompany(e.target.value)}
+                  />
+                </InputGroup>
               </div>
-              <div>
-                <p className="text-gray-700">
+              <div className="mt-2">
+                <p className="text-gray-700 dark:text-dark-text-fill my-2">
                   {" "}
                   Specify the nature of your business (e.g., retail, technology,
                   consulting).
                 </p>
-                <input
+                <Input
                   type="text"
-                  className="border rounded-sm my-2 py-2 px-2 font-medium w-full"
                   placeholder="Business Type"
                   required
                   value={businessType}
@@ -93,12 +110,11 @@ const Register = () => {
                 />
               </div>
               <div>
-                <p className="text-gray-700">
+                <p className="text-gray-700 dark:text-dark-text-fill my-2">
                   {" "}
                   Enter the full name of the owner or authorized representative.
                 </p>
-
-                <input
+                <Input
                   type="text"
                   className="border rounded-sm my-2 py-2 px-2 font-medium w-full"
                   placeholder="Your full Name"
@@ -108,73 +124,94 @@ const Register = () => {
                 />
               </div>
               <div>
-                <p className="text-gray-700">
+                <p className="text-gray-700 dark:text-dark-text-fill my-2">
                   Provide the email address of the owner or authorized
                   representative
                 </p>
-                <input
-                  type="text"
-                  className="border rounded-sm my-2 py-2 px-2 font-medium w-full"
-                  placeholder="Your Email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
+                <InputGroup>
+                  <InputLeftElement pointerEvents="none">
+                    <BsFillEnvelopeAtFill color="gray.300" />
+                  </InputLeftElement>
+                  <Input
+                    type="email"
+                    placeholder="Your Email"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </InputGroup>
               </div>
 
               <div>
-                <p className="text-gray-700">
+                <p className="text-gray-700 dark:text-dark-text-fill my-2">
                   {" "}
                   Enter the primary contact number for your company.
                 </p>
-                <input
-                  type="text"
-                  className="border rounded-sm my-2 py-2 px-2 font-medium w-full"
-                  placeholder="Contact Number"
-                  required
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                />
+                <InputGroup>
+                  <InputLeftElement pointerEvents="none">
+                    <BsTelephoneFill color="gray.300" />
+                  </InputLeftElement>
+                  <Input
+                    type="tel"
+                    placeholder="Phone number"
+                    required
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                  />
+                </InputGroup>
               </div>
 
               <div>
-                <p className="text-gray-700">
+                <p className="text-gray-700 dark:text-dark-text-fill my-2">
                   Specify the physical address of your company's headquarters.
                 </p>
-                <input
-                  type="text"
-                  className="border rounded-sm my-2 py-2 px-2 font-medium w-full"
-                  placeholder="Company Address"
-                  required
-                  value={address}
-                  onChange={(e) => setAdress(e.target.value)}
-                />
+                <InputGroup>
+                  <InputLeftElement pointerEvents="none">
+                    <BsFillPinMapFill color="gray.300" />
+                  </InputLeftElement>
+                  <Input
+                    type="text"
+                    placeholder="Company Address"
+                    required
+                    value={address}
+                    onChange={(e) => setAdress(e.target.value)}
+                  />
+                </InputGroup>
               </div>
 
               <div>
-                <p className="text-gray-700">
+                <p className="text-gray-700 dark:text-dark-text-fill my-2">
                   If applicable, provide the URL of your company's website.
                 </p>
-                <input
-                  type="text"
-                  className="border rounded-sm my-2 py-2 px-2 font-medium w-full"
-                  placeholder="Website (optional)"
-                  value={website}
-                  onChange={(e) => setWebsite(e.target.value)}
-                />
+
+                <InputGroup>
+                  <InputLeftAddon
+                    children="https://"
+                    className="dark:text-gray-700"
+                  />
+                  <Input
+                    type="text"
+                    placeholder="Website (optional)"
+                    value={website}
+                    onChange={(e) => setWebsite(e.target.value)}
+                  />
+                  <InputRightAddon
+                    children=".com"
+                    className="dark:text-gray-700"
+                  />
+                </InputGroup>
               </div>
-              <div>
-                <p className="text-gray-700">
+              <div className="my-4">
+                <p className="text-gray-700 dark:text-dark-text-fill my-2">
                   Please provide a brief description of your company and its
                   core activities (limit: 100 words).
                 </p>
-                <textarea
+                <Textarea
                   type="text"
-                  className="border rounded-sm my-2 py-2 px-2 font-medium w-full"
-                  placeholder="Brief Description"
                   required
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
+                  placeholder="Brief Description"
                 />
               </div>
 

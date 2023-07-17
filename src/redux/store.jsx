@@ -5,7 +5,10 @@ import registerSlice from "./slices/registerSlice";
 import currentUserSlice from "./slices/current-userSlice";
 import usersSlice from "./slices/usersSlice";
 import requestsSlice from "./slices/requestsSlice";
-import barPurchaseRequest from "./slices/barPurchaseRequest";
+import barPurchaseRequest from "./slices/barPurchaseRequestSlice";
+import customersSlice from "./slices/customersSlice";
+import employeesSlice from "./slices/employeesSlice";
+import barProductsSlice from "./slices/barProductsSlice";
 
 const store = configureStore({
   reducer: {
@@ -14,7 +17,10 @@ const store = configureStore({
     login: loginSlice,
     users: usersSlice,
     requests: requestsSlice,
-    barPurchaseRequest: barPurchaseRequest,
+    customers: customersSlice,
+    employees: employeesSlice,
+    barpurchaserequest: barPurchaseRequest,
+    barproducts: barProductsSlice,
     [apiSlice.reducerPath]: apiSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>

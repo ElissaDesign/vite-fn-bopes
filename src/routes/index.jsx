@@ -13,7 +13,7 @@ const SignupPage = React.lazy(() => import("../public-pages/signup-page"));
 
 export const AppComponents = () => {
   return (
-    <div className="flex flex-col dark:bg-dark-frame-bg h-screen">
+    <div className="h-[100%] flex flex-col dark:bg-dark-frame-bg">
       <BrowserRouter>
         <Suspense fallback={<Loader />}>
           <Routes>

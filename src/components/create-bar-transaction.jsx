@@ -31,6 +31,8 @@ export default function BarTransaction({ department, product }) {
     refetchOnReconnect: true,
   });
 
+  console.log("Purchase Pr", data);
+
   const [clientName, setClientName] = useState(product?.clientName || "");
   const [units, setUnits] = useState(product?.units || "");
   const [descr, setDescr] = useState(product?.descr || "");

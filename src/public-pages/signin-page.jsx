@@ -2,6 +2,7 @@ import { useState } from "react";
 import {
   Input,
   InputGroup,
+  InputLeftElement,
   InputRightElement,
   Spinner,
 } from "@chakra-ui/react";
@@ -13,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import { loginFail, loginSuccess } from "../redux/slices/loginSlice";
 import { errorToast } from "../hooks/toast-messages";
 import Navbar from "../components/navBar";
+import { BsFillEnvelopeAtFill } from "react-icons/bs";
 
 export default function SignupPage() {
   const [show, setShow] = useState(false);
@@ -52,8 +54,8 @@ export default function SignupPage() {
     <div className="dark:bg-dark-bg h-screen">
       <Navbar />
 
-      <div className="w-[90%] md:w-2/5 mx-auto pt-20 dark:bg-dark-bg dark:text-dark-text-fill bg-white">
-        <div className="mt-20 ">
+      <div className="w-[90%] md:w-2/5 mx-auto mt-32 dark:bg-dark-bg dark:text-dark-text-fill bg-white border p-8 rounded shadow-lg">
+        <div className="">
           <p className="text-gray-800 dark:text-dark-text-fill text-center text-lg font-semibold">
             Sign in to your account 🌞
           </p>
@@ -62,22 +64,29 @@ export default function SignupPage() {
             <p className="text-gray-800 dark:text-dark-text-fill font-medium text-base py-2">
               Your email address
             </p>
-            <Input
-              placeholder="Enter your email address"
-              className="border h-10 px-2 py-4 border-gray text-gray text-gray-700 outline-none rounded font-light"
-              onChange={(e) => setEmail(e.target.value)}
-            />
+            <InputGroup>
+              <InputLeftElement pointerEvents="none">
+                <BsFillEnvelopeAtFill color="gray.300" />
+              </InputLeftElement>
+              <Input
+                type="email"
+                placeholder="Your Email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </InputGroup>
             <br />
           </div>
 
-          <div className="mt-6">
+          <div className="mt-4">
             <p className="text-gray-800 dark:text-dark-text-fill font-medium text-base pb-2">
               Your password
             </p>
             <InputGroup size="md">
               <Input
                 pr="4.5rem"
-                className="text-gray-700"
+                className="text-gray-700 dark:text-dark-text-fill"
                 type={show ? "text" : "password"}
                 placeholder="Enter password"
                 onChange={(e) => setPassword(e.target.value)}
