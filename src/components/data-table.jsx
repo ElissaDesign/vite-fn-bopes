@@ -12,7 +12,8 @@ import DataPagination from "./data-pagination";
 
 export default function DataTable({ data, columns, title }) {
   const sortedColumns = React.useMemo(() => [...columns], [columns]);
-  const sortedData = React.useMemo(() => [...data], []);
+  // const sortedData = React.useMemo(() => [...data], []);
+  const sortedData = data;
 
   const TableInstance = useTable(
     {

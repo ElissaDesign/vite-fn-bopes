@@ -1,27 +1,27 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import { SearchOutlined } from "@ant-design/icons";
-import { Button, Input, Space, Table } from "antd";
-import { useRef, useState } from "react";
-import Highlighter from "react-highlight-words";
-import {
-  useGlobalFilter,
-  usePagination,
-  useSortBy,
-  useTable,
-} from "react-table";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import DataTable from "../../components/data-table";
 import { Icon } from "@iconify/react";
 import { useGetOrganizationOwnedQuery } from "../../redux/api/apiSlice";
+import { getCustomers } from "../../redux/slices/customersSlice";
 
 export default function Customers() {
+  const dispatch = useDispatch();
+
+  const customers = useSelector((state) => state.customers?.data);
+
   const { data, isLoading } = useGetOrganizationOwnedQuery({
     pollingInterval: 3000,
     refetchOnMountOrArgChange: true,
     refetchOnFocus: true,
     refetchOnReconnect: true,
   });
-  console.log("Organization", data);
+
+  useEffect(() => {
+    dispatch(getCustomers(data?.organizations));
+  }, [data, dispatch]);
 
   const columns = [
     { Header: "Company Name", accessor: "OrganizationName" },
@@ -45,23 +45,6 @@ export default function Customers() {
             height="25"
             cursor="pointer"
             color="#148fb6"
-            /* istanbul ignore next */
-            // onClick={() => {
-            //   setSelectedOptionUpdate({
-            //     value: row.original.cohort,
-            //     label: row.original.cohort,
-            //   });
-            //   setSelectedTeamOptionUpdate({
-            //     value: row.original.team,
-            //     label: row.original.team,
-            //   });
-            //   console.log(selectedOption2);
-            //   console.log(row.original.team);
-            //   removeEditModel();
-            //   setEditEmail(row.original.email);
-            //   setEditCohort(row.original.cohort);
-            //   setEditTeam(row.original.team);
-            // }}
           />
           <Icon
             icon="mdi:close-circle-outline"
@@ -69,12 +52,6 @@ export default function Customers() {
             height="30"
             cursor="pointer"
             color="#148fb6"
-            /* istanbul ignore next */
-            // onClick={() => {
-            //   removeTraineeMod();
-            //   setDeleteEmail(row.original.email);
-            //   setDeleteFromCohort(row.original.team);
-            // }}
           />
 
           <Icon
@@ -83,15 +60,14 @@ export default function Customers() {
             height="30"
             cursor="pointer"
             color="#148fb6"
-            // onClick={() => handleClickOpen(row.original.email)}
           />
         </div>
       ),
     },
   ];
   let datum = [];
-  if (data?.organizations && data?.organizations.length > 0) {
-    data?.organizations.map((data, index) => {
+  if (customers && customers.length > 0) {
+    customers.map((data, index) => {
       datum[index] = {};
       datum[index].OrganizationName = data.OrganizationName;
       datum[index].name = data.name;
@@ -111,11 +87,13 @@ export default function Customers() {
       </div>
 
       <div className="mt-[25px] pb-[15px]">
-        <DataTable
-          data={data?.organizations.length > 0 ? datum : [{}]}
-          columns={columns}
-          title="Customers List"
-        />
+        {datum?.length !== 0 ? (
+          <DataTable data={datum} columns={columns} title="Customers List" />
+        ) : (
+          <div className="text-center mt-48 text-lg uppercase">
+            <p> No customer list found</p>
+          </div>
+        )}
       </div>
     </div>
   );

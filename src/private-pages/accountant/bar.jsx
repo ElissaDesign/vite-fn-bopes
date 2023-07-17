@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+import { useSelector, useDispatch } from "react-redux";
 import {
   Modal,
   ModalBody,
@@ -17,14 +18,20 @@ import {
 } from "../../redux/api/apiSlice";
 import DataTable from "../../components/data-table";
 import moment from "moment";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { errorToast, successToast } from "../../hooks/toast-messages";
 import BarProductCreation from "../../components/bar-product";
+import { getBarPurchaseRequest } from "../../redux/slices/barPurchaseRequest";
 
 export default function BarAccountant({ department }) {
+  const dispatch = useDispatch();
+  const barpurchaserequest = useSelector(
+    (state) => state.barpurchaserequest?.data
+  );
+
   const [product, setProduct] = useState();
 
-  console.log("productId", product);
+  console.log("productId", barpurchaserequest);
   const {
     isOpen: newDrinkRequestModalOpen,
     onOpen: openNewDrinkRequestModal,
@@ -43,6 +50,11 @@ export default function BarAccountant({ department }) {
     refetchOnFocus: true,
     refetchOnReconnect: true,
   });
+
+  useEffect(() => {
+    dispatch(getBarPurchaseRequest(data?.data));
+  }, [data, dispatch]);
+
   console.log("Products", data);
 
   const [deleteBarProductRequest] = useDeleteBarProductRequestMutation();
@@ -168,8 +180,8 @@ export default function BarAccountant({ department }) {
   ];
 
   let datum = [];
-  if (data && data?.data?.length > 0) {
-    data?.data.map((data, index) => {
+  if (barpurchaserequest && barpurchaserequest?.length > 0) {
+    barpurchaserequest?.map((data, index) => {
       const date = moment(data?.createdAt);
       const formattedDate = date.format("MMMM Do, YYYY, h:mm:ss A");
       const totalPrice = data?.purchasingPrice * data?.quantity;
@@ -215,11 +227,17 @@ export default function BarAccountant({ department }) {
       </div>
 
       <div className="mt-[25px] pb-[15px]">
-        <DataTable
-          data={data?.data.length > 0 ? datum : [{}]}
-          columns={columns}
-          title="Purchase Request List"
-        />
+        {datum?.length !== 0 ? (
+          <DataTable
+            data={datum}
+            columns={columns}
+            title="Purchase Request List"
+          />
+        ) : (
+          <div className="text-center mt-48 text-lg uppercase">
+            <p> No purchase requests found</p>
+          </div>
+        )}
       </div>
 
       <div>

@@ -6,6 +6,8 @@ import currentUserSlice from "./slices/current-userSlice";
 import usersSlice from "./slices/usersSlice";
 import requestsSlice from "./slices/requestsSlice";
 import barPurchaseRequest from "./slices/barPurchaseRequest";
+import customersSlice from "./slices/customersSlice";
+import employeesSlice from "./slices/employeesSlice";
 
 const store = configureStore({
   reducer: {
@@ -14,6 +16,8 @@ const store = configureStore({
     login: loginSlice,
     users: usersSlice,
     requests: requestsSlice,
+    customers: customersSlice,
+    employees: employeesSlice,
     barPurchaseRequest: barPurchaseRequest,
     [apiSlice.reducerPath]: apiSlice.reducer,
   },

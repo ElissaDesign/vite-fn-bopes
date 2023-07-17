@@ -49,18 +49,9 @@ function Sidebar({ style, toggle }) {
       const departments = JSON.parse(localStorage.getItem("departments"));
       setDepartments(departments);
       console.log("Interval executed!");
-    }, 2000);
+    }, 1000);
     return () => clearInterval(interval);
   }, []);
-
-  // console.log("mmg hgarfkwg wehmgwhgdchw", departments);
-
-  // const { data, isLoading } = useGetAllDepartmentsUserHaveQuery({
-  //   pollingInterval: 2000,
-  //   refetchOnMountOrArgChange: true,
-  //   refetchOnFocus: true,
-  //   refetchOnReconnect: true,
-  // });
 
   return (
     <div
@@ -197,7 +188,7 @@ function Sidebar({ style, toggle }) {
           <FiHelpCircle className="w-5 mr-2 " />
         </SideNavLink>
 
-        <li className="inline-flex items-center text-white text-base my-2">
+        <li className="inline-flex items-center text-white text-base">
           <MdDarkMode className="mr-2" />
           <span>Dark Mode</span>
           <Tooltip message="DarkMode">
@@ -205,40 +196,11 @@ function Sidebar({ style, toggle }) {
               <DarkModeSwitch
                 checked={darkSide}
                 onChange={toggleDarkMode}
-                size={30}
+                size={25}
               />
             </div>
           </Tooltip>
         </li>
-
-        {/* Add icons */}
-        <div className="flex flex-row ml-10 mt-auto list-none">
-          <li className="px-2">
-            <NavLink to="#link">
-              {/* <Tooltip message="Logout">
-                <LogoutIcon
-                  onClick={logout}
-                  className="w-5 text-red-700 dark:text-red-600 hover:text-red-900"
-                />
-              </Tooltip> */}
-            </NavLink>
-          </li>
-          <li className="px-2">
-            <NavLink
-              to="/dashboard/settings"
-              className={(navData) => {
-                if (navData.isActive) {
-                  return "flex flex-row font-bold text-primary dark:text-primary";
-                }
-                return "flex flex-row dark:text-dark-text-fill";
-              }}
-            >
-              <Tooltip message="Settings">
-                <CogIcon className="w-5 hover:text-primary " onClick={toggle} />
-              </Tooltip>
-            </NavLink>
-          </li>
-        </div>
       </div>
     </div>
   );

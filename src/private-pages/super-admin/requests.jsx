@@ -5,7 +5,6 @@
 
 import {
   useGetRequestsQuery,
-  useGetRequestQuery,
   useRegisterOrganizationMutation,
 } from "../../redux/api/apiSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,7 +14,6 @@ import { errorToast, successToast } from "../../hooks/toast-messages";
 import { getRequests } from "../../redux/slices/requestsSlice";
 import DataTable from "../../components/data-table";
 import { useEffect, useState } from "react";
-// import ReusableModal from "../../components/popup-model";
 import {
   Button,
   Modal,
@@ -40,7 +38,6 @@ export default function Requests() {
   const [name, setName] = useState();
   const [password, setPassword] = useState("12345");
   const [phone, setPhone] = useState();
-  // const [requestId, setRequestId] = useState();
 
   const [registerOrganization, { isLoading }] =
     useRegisterOrganizationMutation();
@@ -48,8 +45,6 @@ export default function Requests() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log("details", company, name, email, password, phone);
-
       const organization = await registerOrganization({
         company,
         name,
@@ -70,7 +65,6 @@ export default function Requests() {
     refetchOnFocus: true,
     refetchOnReconnect: true,
   });
-  console.log("Details====", data);
 
   useEffect(() => {
     dispatch(getRequests(data?.data));
@@ -129,7 +123,9 @@ export default function Requests() {
       ),
     },
   ];
+
   let datum = [];
+
   if (requests && requests?.length > 0) {
     requests?.map((data, index) => {
       const date = moment(data?.createdAt);
@@ -159,11 +155,17 @@ export default function Requests() {
       </div>
 
       <div className="mt-[25px] pb-[15px]">
-        <DataTable
-          data={requests?.length > 0 ? datum : [{}]}
-          columns={columns}
-          title="Company Register Request list"
-        />
+        {datum?.length !== 0 ? (
+          <DataTable
+            data={datum}
+            columns={columns}
+            title="Company Register Request list"
+          />
+        ) : (
+          <div className="text-center mt-48 text-lg uppercase">
+            <p> No request found</p>
+          </div>
+        )}
       </div>
 
       <Modal isOpen={isOpen} onClose={onClose}>
