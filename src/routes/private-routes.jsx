@@ -50,7 +50,7 @@ export default function PrivateRoutes() {
 
   return (
     <RequireAuth>
-      <div className="h-[100%] flex flex-col dark:bg-dark-frame-bg">
+      <div className="h-screen flex flex-col dark:bg-dark-frame-bg">
         <Topbar />
         <div className="flex flex-col lg:flex-row ">
           <div className="lg:basis-[15%]">

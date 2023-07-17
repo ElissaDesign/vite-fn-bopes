@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/no-children-prop */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Input, Select, Spinner } from "@chakra-ui/react";
 import Button from "./button";
 
@@ -13,8 +13,12 @@ import {
 import { errorToast, successToast } from "../hooks/toast-messages";
 
 export default function BarProduct({ department, product }) {
-  console.log("Department on Model: " + department.id);
-  console.log("Product on Model: " + product);
+  const [role, setRole] = useState("");
+
+  useEffect(() => {
+    const role = localStorage.getItem("role");
+    setRole(role);
+  }, [department]);
 
   const [createBarProductRequest, createProductInfo] =
     useCreateBarProductRequestMutation();
@@ -31,11 +35,16 @@ export default function BarProduct({ department, product }) {
     refetchOnReconnect: true,
   });
 
-  const [barProductId, setProductId] = useState(product?.drinkType || "");
+  const [barProductId, setProductId] = useState(product?.barProductId || "");
   const [purchasingPrice, setPurchasingPrice] = useState(
-    product?.purchasingPrice || ""
+    product?.purchasingPrice || null
   );
-  const [quantity, setQuantity] = useState(product?.quantity || "");
+  const [quantity, setQuantity] = useState(product?.quantity || null);
+
+  const [sellingPrice, setSellingPrice] = useState(
+    product?.sellingPrice || null
+  );
+  const [status, setStatus] = useState(product?.status || "");
 
   const CreateProductRequest = async (e) => {
     e.preventDefault();
@@ -51,7 +60,6 @@ export default function BarProduct({ department, product }) {
         purchasingPrice,
         quantity,
       }).unwrap();
-      console.log("User Invitation:", newdata);
       successToast(newdata?.message || "Created");
     } catch (error) {
       console.log("Error", error);
@@ -64,17 +72,17 @@ export default function BarProduct({ department, product }) {
     if (!barProductId || !purchasingPrice || !quantity) {
       return errorToast("Fill all required fields");
     }
-    console.log("Fill all required fields", product.id);
     try {
       const newdata = await updateBarProductRequest({
-        serviceId: product?.id,
+        productId: product?.id,
         product: {
           barProductId,
           purchasingPrice,
+          sellingPrice,
+          status,
           quantity,
         },
       }).unwrap();
-      console.log("User Invitation:", newdata);
       successToast(newdata?.message || "Updated");
     } catch (error) {
       console.log("Error", error);
@@ -82,36 +90,32 @@ export default function BarProduct({ department, product }) {
     }
   };
 
-  console.log(department?.id);
-
   return (
     <div className="">
       <div className="w-full mx-auto">
         <div>
+          <div className={role === "manager" ? "block" : "hidden"}></div>
+
           <div>
             <p className="text-gray font-medium text-base py-2">
               Type of Drink(liquor/beer)
             </p>
             <Select
               placeholder="Select product"
+              defaultValue={barProductId}
               onBlur={(e) => setProductId(e.target.value)}
               className="dark:bg-dark-bg"
             >
-              {data?.data.map((product) => {
-                return (
-                  <>
-                    <option
-                      value={product.id}
-                      key={product.id}
-                      className="dark:bg-dark-bg hover:dark:bg-dark-bg"
-                      aria-required
-                    >
-                      {product.drinkName}
-                    </option>
-                    ;
-                  </>
-                );
-              })}
+              {data?.data.map((product, index) => (
+                <option
+                  value={product.id}
+                  key={index}
+                  className="dark:bg-dark-bg hover:dark:bg-dark-bg"
+                  aria-required
+                >
+                  {product.drinkName}
+                </option>
+              ))}
             </Select>
             <br />
           </div>
@@ -129,6 +133,19 @@ export default function BarProduct({ department, product }) {
             />
             <br />
           </div>
+          <div className={role === "manager" ? "block" : "hidden"}>
+            <p className="text-gray font-medium text-base py-2">
+              Selling Price
+            </p>
+            <Input
+              type="text"
+              placeholder="selling price"
+              defaultValue={sellingPrice}
+              className="border h-10 px-2 py-4 border-gray text-gray outline-none rounded font-light"
+              onBlur={(e) => setSellingPrice(e.target.value)}
+            />
+            <br />
+          </div>
           <div>
             <p className="text-gray font-medium text-base py-2">Quantity</p>
             <Input
@@ -138,6 +155,36 @@ export default function BarProduct({ department, product }) {
               className="border h-10 px-2 py-4 border-gray text-gray outline-none rounded font-light"
               onBlur={(e) => setQuantity(e.target.value)}
             />
+            <br />
+          </div>
+          <div className={role === "manager" ? "block" : "hidden"}>
+            <p className="text-gray font-medium text-base py-2">Status</p>
+
+            <Select
+              placeholder="Select status"
+              onBlur={(e) => setStatus(e.target.value)}
+              className="dark:bg-dark-bg"
+              defaultValue={status}
+            >
+              <option
+                value="pending"
+                className="dark:bg-dark-bg hover:dark:bg-dark-bg"
+              >
+                Pending
+              </option>
+              <option
+                value="approved"
+                className="dark:bg-dark-bg hover:dark:bg-dark-bg"
+              >
+                Approved
+              </option>
+              <option
+                value="complete"
+                className="dark:bg-dark-bg hover:dark:bg-dark-bg"
+              >
+                Complete
+              </option>
+            </Select>
             <br />
           </div>
 

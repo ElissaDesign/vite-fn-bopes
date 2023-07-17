@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-key */
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   useGlobalFilter,
   usePagination,
@@ -12,8 +12,12 @@ import DataPagination from "./data-pagination";
 
 export default function DataTable({ data, columns, title }) {
   const sortedColumns = React.useMemo(() => [...columns], [columns]);
-  // const sortedData = React.useMemo(() => [...data], []);
-  const sortedData = data;
+
+  const [sortedData, setSortedData] = useState(data);
+
+  useEffect(() => {
+    setSortedData([...data]);
+  }, [data]);
 
   const TableInstance = useTable(
     {

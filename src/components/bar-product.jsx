@@ -1,24 +1,24 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/no-children-prop */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Input, Select, Spinner } from "@chakra-ui/react";
 import Button from "./button";
-
+import { useSelector, useDispatch } from "react-redux";
 import {
   useCreateProductMutation,
   useDeleteProductMutation,
-  useGetProductQuery,
   useGetProductsQuery,
   useUpdateProductMutation,
 } from "../redux/api/apiSlice";
 import { errorToast, successToast } from "../hooks/toast-messages";
 import { Icon } from "@iconify/react";
 import DataTable from "./data-table";
+import { getBarProducts } from "../redux/slices/barProductsSlice";
 
 export default function BarProductCreation({ department, product }) {
-  console.log("Department on Model: " + department.id);
-  console.log("Product on Model: " + product);
+  const dispatch = useDispatch();
+  const barproducts = useSelector((state) => state.barproducts?.data);
 
   const [createProduct, createProductInfo] = useCreateProductMutation();
   const [updateProduct, updateProductInfo] = useUpdateProductMutation();
@@ -26,13 +26,17 @@ export default function BarProductCreation({ department, product }) {
   const createProductLoading = createProductInfo.isLoading;
   const updateProductLoading = updateProductInfo.isLoading;
 
-  const { data } = useGetProductsQuery(department.id, {
-    pollingInterval: 3000,
+  const { data } = useGetProductsQuery(department?.id, {
+    pollingInterval: 6000,
     refetchOnMountOrArgChange: true,
     refetchOnFocus: true,
     refetchOnReconnect: true,
   });
-  console.log("Products", data);
+
+  useEffect(() => {
+    dispatch(getBarProducts(data?.data));
+  }, [data, dispatch]);
+
   const [deleteProduct] = useDeleteProductMutation();
 
   const [drinkType, setDrinkType] = useState(product?.drinkType || "");
@@ -51,7 +55,6 @@ export default function BarProductCreation({ department, product }) {
         drinkType,
         drinkName,
       }).unwrap();
-      console.log("User Invitation:", newdata);
       successToast(newdata?.message || "Created");
     } catch (error) {
       console.log("Error", error);
@@ -64,7 +67,6 @@ export default function BarProductCreation({ department, product }) {
     if (!drinkType || !drinkName) {
       return errorToast("Fill all required fields");
     }
-    console.log("Fill all required fields", product.id);
     try {
       const newdata = await updateProduct({
         productId: product?.id,
@@ -73,7 +75,6 @@ export default function BarProductCreation({ department, product }) {
           drinkName,
         },
       }).unwrap();
-      console.log("User Invitation:", newdata);
       successToast(newdata?.message || "Updated");
     } catch (error) {
       console.log("Error", error);
@@ -113,7 +114,6 @@ export default function BarProductCreation({ department, product }) {
                 const deletedproduct = await deleteProduct(
                   row?.original.id
                 ).unwrap();
-                console.log(deletedproduct);
                 successToast(deletedproduct?.message);
               } catch (error) {
                 console.log(error);
@@ -127,8 +127,8 @@ export default function BarProductCreation({ department, product }) {
   ];
 
   let datum = [];
-  if (data && data?.data?.length > 0) {
-    data?.data.map((data, index) => {
+  if (barproducts && barproducts?.length > 0) {
+    barproducts?.map((data, index) => {
       datum[index] = {};
       datum[index].id = data.id;
       datum[index].drinkType = data.drinkType;
@@ -202,11 +202,13 @@ export default function BarProductCreation({ department, product }) {
           </Button>
         </div>
         <div className="mt-[25px] pb-[15px] overflow-x-scroll flex-wrap">
-          <DataTable
-            data={data?.data.length > 0 ? datum : [{}]}
-            columns={columns}
-            title="Products List"
-          />
+          {datum?.length !== 0 ? (
+            <DataTable data={datum} columns={columns} title="Products List" />
+          ) : (
+            <div className="text-center mt-48 text-lg uppercase">
+              <p> No bar products found</p>
+            </div>
+          )}
         </div>{" "}
       </div>
     </div>

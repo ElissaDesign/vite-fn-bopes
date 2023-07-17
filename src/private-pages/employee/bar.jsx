@@ -13,7 +13,6 @@ import { Icon } from "@iconify/react";
 import {
   useDeleteProductMutation,
   useGetEmployeeBarTransationsQuery,
-  useGetProductsQuery,
 } from "../../redux/api/apiSlice";
 import DataTable from "../../components/data-table";
 import moment from "moment";

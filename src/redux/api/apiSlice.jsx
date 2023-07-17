@@ -227,7 +227,7 @@ export const apiSlice = createApi({
       query: (args) => {
         const { productId, product } = args;
         return {
-          url: `/products/${productId}`,
+          url: `/products/request/${productId}`,
           method: "PATCH",
           body: product,
         };
