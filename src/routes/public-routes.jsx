@@ -4,6 +4,7 @@ import { Route, Routes } from "react-router-dom";
 import Loader from "../components/css-loader/loader";
 import Navbar from "../components/navBar";
 import Error from "../components/error";
+import Footer from "../components/commom/MainFooter";
 
 const LandingPage = React.lazy(() => import("../public-pages/landing-page"));
 const AboutPage = React.lazy(() => import("../public-pages/about-page"));
@@ -23,6 +24,7 @@ export const PublicRoutes = () => {
           <Route path="*" element={<Error />} />
         </Routes>
       </Suspense>
+      <Footer />
     </div>
   );
 };

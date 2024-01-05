@@ -4,7 +4,7 @@ export default {
   darkMode: "class",
   theme: {
     fontFamily: {
-      sans: ["Roboto", "Arial", "sans-serif"],
+      sans: ["Manrope", "Arial", "sans-serif"],
     },
     extend: {
       screens: {
@@ -14,7 +14,7 @@ export default {
         xl: "1440px",
       },
       colors: {
-        primary: "#148FB6",
+        primary: "#3359DF",
         secondary: "#173B3F",
         "light-bg": "#F9F9FB",
         "light-text": "#111827",
@@ -27,12 +27,18 @@ export default {
         "dark-45": "#00000073",
         "border-dark": "#5f5b5b80",
 
-        // dark: {
-        //   100: "#272627",
-        //   // 200: "#FFEAB3",
-        //   300: "#171617",
-        //   // ...
-        // },
+        // background
+        "bg-primary": "#E6E6E6",
+        "bg-white": "#FFF",
+
+        // font colors
+        gray: {
+          100: "#555555",
+          300: "#606060",
+          600: "#363636",
+        },
+        // border color
+        "border-color": "#B4C7DB",
       },
     },
   },

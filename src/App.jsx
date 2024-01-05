@@ -4,7 +4,7 @@ import { AppComponents } from "./routes/index";
 
 function App() {
   return (
-    <main className="h-[100%] dark:bg-dark-frame-bg">
+    <main className="h-[100%] dark:bg-dark-frame-bg antialiased">
       <AppComponents />
       <ToastContainer />
     </main>

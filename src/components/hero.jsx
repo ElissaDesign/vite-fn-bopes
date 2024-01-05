@@ -4,7 +4,7 @@ import HeroImg from "../assets/images/heroImg.png";
 
 export default function Hero() {
   return (
-    <div className="w-full h-screen dark:bg-dark-bg bg-white py-24">
+    <div className="w-full h-screen dark:bg-dark-bg bg-white pt-24">
       <div className="md:max-w-[85%] m-auto grid md:grid-cols-2 max-w-[600px]  px-4 md:px-0">
         <div className="flex flex-col justify-start gap-4">
           <p className="py-2 text-2xl text-[#20B486] font-bold">
@@ -32,21 +32,6 @@ export default function Hero() {
           <p className="py-2 text-lg text-gray-600">
             Various versions have evolved over the years, sometimes by accident.
           </p>
-          {/* 
-          <form className="bg-white border max-w-[500px] p-4 input-box-shadow rounded-md flex justify-between">
-            <input
-              className="bg-white"
-              type="text"
-              placeholder="What do want to learn?"
-            />
-            <button>
-              <AiOutlineSearch
-                size={20}
-                className="icon"
-                style={{ color: "#000" }}
-              />
-            </button>
-          </form> */}
         </div>
         <img
           src={HeroImg}
