@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Logo from "../assets/images/logo.svg";
+import Logo from "../assets/Bopes.svg";
 import Lock from "../assets/images/lock.svg";
 import Close from "../assets/images/close.svg";
 import HamburgerMenu from "../assets/images/hamburgerMenu.svg";
@@ -23,7 +23,7 @@ const Navbar = () => {
   const handleClick = () => setToggle(!toggle);
 
   return (
-    <div className="w-full dark:bg-dark-bg bg-white h-[80px] border-b-[0.5px] border-gray-100 shadow-md fixed bg-opacity-95 z-10 ">
+    <div className="w-full dark:bg-dark-bg bg-white h-[80px] dark:border-b-[0.5px] dark:border-gray-100 shadow-md fixed bg-opacity-95 z-10 ">
       <div className="md:max-w-[85%] max-w-[600px] m-auto w-full h-full flex justify-between items-center md:px-0 px-4">
         <img src={Logo} alt="My logo" />
 
@@ -60,7 +60,7 @@ const Navbar = () => {
             <a href="/auth/login">Login</a>
           </button>
           <button className="px-8 py-3 rounded-md bg-[#3359DF] text-white font-bold">
-            <a href="/auth/register">Sign Up For Free</a>
+            <a href="/auth/register">Free trial</a>
           </button>
         </div>
 
@@ -80,8 +80,7 @@ const Navbar = () => {
           toggle
             ? "absolute z-10 p-4 dark:bg-dark-bg dark:text-dark-text-fill bg-white w-full px-8 md:hidden border-b ease-in-out duration-500"
             : "fixed top-[-100%]"
-        }
-      >
+        }>
         <ul>
           <li className="p-4 hover:bg-gray-100 hover:dark:bg-dark-frame-bg">
             <a href="/">Home</a>
@@ -115,7 +114,7 @@ const Navbar = () => {
               <a href="/auth/login">Login</a>
             </button>
             <button className="px-8 py-5 rounded-md bg-[#3359DF] text-white font-bold">
-              <a href="/auth/register">Sign Up For Free</a>
+              <a href="/auth/register">Free trial</a>
             </button>
           </div>
         </ul>
