@@ -25,6 +25,12 @@ export const apiSlice = createApi({
         body: user,
       }),
     }),
+    verifyEmail: builder.mutation({
+      query: () => ({
+        url: "/auth/verify-email",
+        method: "POST",
+      }),
+    }),
     inviteUser: builder.mutation({
       query: (user) => ({
         url: "/users/invite",
@@ -260,6 +266,7 @@ export const apiSlice = createApi({
 });
 export const {
   useUserRegisterMutation,
+  useVerifyEmailMutation,
   useUserLoginMutation,
   useCurrentUserQuery,
   useSignOutMutation,

@@ -16,6 +16,10 @@ const ForgotPasswordPage = React.lazy(() =>
 const ResetPasswordPage = React.lazy(() =>
   import("../public-pages/reset-password-page")
 );
+const StartUpPage = React.lazy(() => import("../public-pages/startup"));
+const VerifyEmailPage = React.lazy(() =>
+  import("../public-pages/verify-email-page")
+);
 
 export const AppComponents = () => {
   return (
@@ -29,6 +33,8 @@ export const AppComponents = () => {
             <Route path="/auth/register" element={<SignupPage />} />
             <Route path="/forgot-password" element={<ForgotPasswordPage />} />
             <Route path="/reset-password" element={<ResetPasswordPage />} />
+            <Route path="/verify-email" element={<VerifyEmailPage />} />
+            <Route path="/startup" element={<StartUpPage />} />
 
             <Route path="/*" element={<PublicRoutes />} />
           </Routes>
