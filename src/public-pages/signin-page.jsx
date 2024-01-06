@@ -7,6 +7,7 @@ import { loginFail, loginSuccess } from "../redux/slices/loginSlice";
 import { errorToast } from "../hooks/toast-messages";
 import Navbar from "../components/navBar";
 import AnalyisImage from "../assets/undraw_real_time_analytics_re_yliv.svg";
+import { Spinner } from "@chakra-ui/react";
 
 export default function SignupPage() {
   const [show, setShow] = useState(false);
@@ -53,7 +54,12 @@ export default function SignupPage() {
           </div>
           <p>Analyze real-time data for decision making</p>
           <div>
-            <form class="space-y-6" action="#" method="POST" className="mt-6">
+            <form
+              class="space-y-6"
+              action="#"
+              method="POST"
+              className="mt-6"
+              onSubmit={onSubmit}>
               <div>
                 <label
                   for="email"
@@ -65,7 +71,10 @@ export default function SignupPage() {
                     id="email"
                     name="email"
                     type="email"
-                    autocomplete="email"
+                    placeholder="email"
+                    autoComplete="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     required
                     class="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 focus:outline-none"
                   />
@@ -85,7 +94,10 @@ export default function SignupPage() {
                     id="password"
                     name="password"
                     type="password"
-                    autocomplete="current-password"
+                    autoComplete="current-password"
+                    placeholder="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     required
                     class="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 focus:outline-none "
                   />
@@ -103,13 +115,17 @@ export default function SignupPage() {
                 <button
                   type="submit"
                   class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                  Sign in
+                  {isLoading ? <Spinner /> : `Sign in`}
                 </button>
               </div>
 
               <p className="text-center my-6">
                 Don’t have an account ?{" "}
-                <span className="text-primary">Sign up</span>{" "}
+                <a
+                  href="/auth/register"
+                  class="font-semibold text-primary hover:text-indigo-500">
+                  Sign up{" "}
+                </a>
               </p>
             </form>
           </div>
@@ -139,7 +155,6 @@ export default function SignupPage() {
           </div>
         </div>
       </div>
-      {/* <Footer /> */}
     </div>
   );
 }

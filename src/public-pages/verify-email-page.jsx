@@ -8,14 +8,15 @@ export default function ResetPasswordPage() {
   const searchParams = new URLSearchParams(location.search);
   const token = searchParams.get("token");
   const [verificationStatus, setVerificationStatus] = useState();
-  console.log(token);
+    const BACKEND_URL = import.meta.env.VITE_REACT_APP_BACKEND_URL;
+
 
   useEffect(() => {
     const verifyEmail = async () => {
       try {
         // Make a request to your backend to verify the email
         const response = await axios.get(
-          `http://localhost:5000/api/v1/auth/verify-email?token=${token}`
+          `${BACKEND_URL}/auth/verify-email?token=${token}`
         );
         console.log(response, token);
         // Update the verification status based on the response
