@@ -4,16 +4,18 @@ import { useUserLoginMutation } from "../redux/api/apiSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { loginFail, loginSuccess } from "../redux/slices/loginSlice";
-import { errorToast } from "../hooks/toast-messages";
+import { getProfile } from "../redux/slices/userProfileSlice";
+import { errorToast, successToast } from "../hooks/toast-messages";
 import Navbar from "../components/navBar";
 import AnalyisImage from "../assets/undraw_real_time_analytics_re_yliv.svg";
 import { Spinner } from "@chakra-ui/react";
+import axios from "axios";
 
 export default function SignupPage() {
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
-
   const dispatch = useDispatch();
+
   const navigate = useNavigate();
   const [userLogin, { isLoading }] = useUserLoginMutation();
 
@@ -29,12 +31,40 @@ export default function SignupPage() {
         email,
         password,
       }).unwrap();
-      console.log(email);
-
-      localStorage.setItem("role", newdata.data.user.role);
       localStorage.setItem("auth_token", newdata.data.token);
-      dispatch(loginSuccess({ ...newdata }));
-      navigate("/dashboard");
+      const token = localStorage.getItem("auth_token");
+
+      // get profile of logged user
+      var config = {
+        method: "get",
+        url: `${import.meta.env.VITE_REACT_APP_BACKEND_URL}/users/profile`,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      axios(config)
+        .then(function (response) {
+          const res = response.data;
+          if (res.success) {
+            console.log("Logged in data user:", res.data);
+            dispatch(getProfile({ ...res.data }));
+
+            if (
+              res?.data.role === "creator" &&
+              res?.data.organization === null
+            ) {
+              navigate("/startup");
+            } else {
+              navigate("/dashboard");
+            }
+          } else {
+            errorToast(`${res.message}` || "fail");
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     } catch (error) {
       dispatch(loginFail({ ...error }));
       errorToast(

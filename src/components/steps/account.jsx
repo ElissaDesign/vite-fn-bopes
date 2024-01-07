@@ -1,5 +1,6 @@
 import { useStepperContext } from "../../context/stepper-context";
-import { BiUser, BiLock } from "react-icons/bi";
+import { BiLock } from "react-icons/bi";
+import { MailPlus, Chrome } from "lucide-react";
 
 export default function Account() {
   const { userData, setUserData } = useStepperContext();
@@ -27,25 +28,24 @@ export default function Account() {
       <div className="flex flex-col ">
         <div className="mx-2 w-full flex-1">
           <div className="my-2 flex items-center border-b border-[#D9D9D9] bg-white p-1">
-            <BiUser />
+            <MailPlus className="text-gray-100 text-[10px]" />
             <input
               onChange={handleChange}
-              value={userData["username"] || ""}
-              name="username"
-              placeholder="Your name"
+              value={userData["companyemail"] || ""}
+              name="companyemail"
+              placeholder="Company email"
               className="w-full appearance-none p-1 px-2 text-gray-300 outline-none font-light"
             />
           </div>
         </div>
         <div className="mx-2 w-full flex-1">
           <div className="my-2 flex items-center border-b border-gray-100 bg-white p-1">
-            <BiLock />
+            <Chrome className="text-gray-100 text-[10px]" />
             <input
               onChange={handleChange}
-              value={userData["password"] || ""}
-              name="password"
-              placeholder="Password"
-              type="password"
+              value={userData["website"] || ""}
+              name="website"
+              placeholder="Company website"
               className="w-full appearance-none p-1 px-2 text-gray-300 outline-none font-light"
             />
           </div>
@@ -58,8 +58,7 @@ export default function Account() {
                 name="code"
                 onChange={handleChange}
                 value={userData["code"] || ""}
-                className="w-full p-1 px-2 text-gray-300 outline-none font-light"
-              >
+                className="w-full p-1 px-2 text-gray-300 outline-none font-light">
                 <option value="+250">+250</option>
                 <option value="+457">+457</option>
               </select>

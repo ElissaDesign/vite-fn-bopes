@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Layout from "../components/layout";
 import React, { Suspense } from "react";
 import Loader from "../components/css-loader/loader";
+import RequireAuth from "../hooks/require-auth";
 
 const LandingPage = React.lazy(() => import("../public-pages/landing-page"));
 const PrivateRoutes = React.lazy(() => import("../routes/private-routes"));
@@ -34,8 +35,14 @@ export const AppComponents = () => {
             <Route path="/forgot-password" element={<ForgotPasswordPage />} />
             <Route path="/reset-password" element={<ResetPasswordPage />} />
             <Route path="/verify-email" element={<VerifyEmailPage />} />
-            <Route path="/startup" element={<StartUpPage />} />
-
+            <Route
+              path="/startup"
+              element={
+                <RequireAuth>
+                  <StartUpPage />
+                </RequireAuth>
+              }
+            />
             <Route path="/*" element={<PublicRoutes />} />
           </Routes>
         </Suspense>
