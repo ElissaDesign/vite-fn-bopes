@@ -10,7 +10,7 @@ export default function Final() {
           Your account has been created.
         </div>
         <a className="mt-10" href="dashboard">
-          <button className="h-10 px-5 text-blue transition-colors duration-150 border border-gray-300 rounded-lg focus:shadow-outline hover:bg-blue hover:text-white hover:border-none">
+          <button className="h-10 px-5 text-primary transition-colors duration-150 border border-gray-300 rounded-lg focus:shadow-outline hover:bg-primary hover:text-white hover:border-none">
             Start
           </button>
         </a>

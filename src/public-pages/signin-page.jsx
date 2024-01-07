@@ -1,28 +1,21 @@
 import { useState } from "react";
-import {
-  Input,
-  InputGroup,
-  InputLeftElement,
-  InputRightElement,
-  Spinner,
-} from "@chakra-ui/react";
 import { Icon } from "@iconify/react";
-import Button from "../components/button";
 import { useUserLoginMutation } from "../redux/api/apiSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { loginFail, loginSuccess } from "../redux/slices/loginSlice";
-import { errorToast } from "../hooks/toast-messages";
+import { getProfile } from "../redux/slices/userProfileSlice";
+import { errorToast, successToast } from "../hooks/toast-messages";
 import Navbar from "../components/navBar";
-import { BsFillEnvelopeAtFill } from "react-icons/bs";
 import AnalyisImage from "../assets/undraw_real_time_analytics_re_yliv.svg";
-import Footer from "../components/commom/MainFooter";
+import { Spinner } from "@chakra-ui/react";
+import axios from "axios";
 
 export default function SignupPage() {
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
-
   const dispatch = useDispatch();
+
   const navigate = useNavigate();
   const [userLogin, { isLoading }] = useUserLoginMutation();
 
@@ -38,12 +31,40 @@ export default function SignupPage() {
         email,
         password,
       }).unwrap();
-      console.log(email);
-
-      localStorage.setItem("role", newdata.data.user.role);
       localStorage.setItem("auth_token", newdata.data.token);
-      dispatch(loginSuccess({ ...newdata }));
-      navigate("/dashboard");
+      const token = localStorage.getItem("auth_token");
+
+      // get profile of logged user
+      var config = {
+        method: "get",
+        url: `${import.meta.env.VITE_REACT_APP_BACKEND_URL}/users/profile`,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      axios(config)
+        .then(function (response) {
+          const res = response.data;
+          if (res.success) {
+            console.log("Logged in data user:", res.data);
+            dispatch(getProfile({ ...res.data }));
+
+            if (
+              res?.data.role === "creator" &&
+              res?.data.organization === null
+            ) {
+              navigate("/startup");
+            } else {
+              navigate("/dashboard");
+            }
+          } else {
+            errorToast(`${res.message}` || "fail");
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     } catch (error) {
       dispatch(loginFail({ ...error }));
       errorToast(
@@ -55,67 +76,6 @@ export default function SignupPage() {
   return (
     <div className="dark:bg-dark-bg h-screen overflow-x-hidden ">
       <Navbar />
-      {/* 
-      <div className="w-[90%] md:w-2/5 mx-auto mt-32 dark:bg-dark-bg dark:text-dark-text-fill bg-white border p-8 rounded shadow-lg">
-        <div className="">
-          <p className="text-gray-800 dark:text-dark-text-fill text-center text-lg font-semibold">
-            Sign in to your account 🌞
-          </p>
-
-          <div className="mt-8 ">
-            <p className="text-gray-800 dark:text-dark-text-fill font-medium text-base py-2">
-              Your email address
-            </p>
-            <InputGroup>
-              <InputLeftElement pointerEvents="none">
-                <BsFillEnvelopeAtFill color="gray.300" />
-              </InputLeftElement>
-              <Input
-                type="email"
-                placeholder="Your Email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </InputGroup>
-            <br />
-          </div>
-
-          <div className="mt-4">
-            <p className="text-gray-800 dark:text-dark-text-fill font-medium text-base pb-2">
-              Your password
-            </p>
-            <InputGroup size="md">
-              <Input
-                pr="4.5rem"
-                className="text-gray-700 dark:text-dark-text-fill"
-                type={show ? "text" : "password"}
-                placeholder="Enter password"
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <InputRightElement width="4.5rem">
-                <Button
-                  style="text-xl w-full text-sm flex items-center justify-center"
-                  size="sm"
-                  onClick={handleClick}
-                >
-                  {show ? <Icon icon="mdi:hide" /> : <Icon icon="mdi:show" />}
-                </Button>
-              </InputRightElement>
-            </InputGroup>
-
-            <br />
-          </div>
-          <Button
-            style="text-xl w-full text-sm flex items-center justify-center"
-            size="lg"
-            onClick={onSubmit}
-          >
-            {isLoading ? <Spinner /> : "Login"}
-          </Button>
-        </div>
-      </div> */}
-
       <div className="flex flex-col md:flex-row mt-32 md:pl-[8%] overflow-x-hidden">
         <div className="basis-full w-[90%] md:w-full mx-auto md:basis-[40%] mb-10 md:mb-0">
           <div className="flex items-center gap-3">
@@ -124,7 +84,12 @@ export default function SignupPage() {
           </div>
           <p>Analyze real-time data for decision making</p>
           <div>
-            <form class="space-y-6" action="#" method="POST" className="mt-6">
+            <form
+              class="space-y-6"
+              action="#"
+              method="POST"
+              className="mt-6"
+              onSubmit={onSubmit}>
               <div>
                 <label
                   for="email"
@@ -136,7 +101,10 @@ export default function SignupPage() {
                     id="email"
                     name="email"
                     type="email"
-                    autocomplete="email"
+                    placeholder="email"
+                    autoComplete="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     required
                     class="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 focus:outline-none"
                   />
@@ -156,7 +124,10 @@ export default function SignupPage() {
                     id="password"
                     name="password"
                     type="password"
-                    autocomplete="current-password"
+                    autoComplete="current-password"
+                    placeholder="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     required
                     class="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 focus:outline-none "
                   />
@@ -174,13 +145,17 @@ export default function SignupPage() {
                 <button
                   type="submit"
                   class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                  Sign in
+                  {isLoading ? <Spinner /> : `Sign in`}
                 </button>
               </div>
 
               <p className="text-center my-6">
                 Don’t have an account ?{" "}
-                <span className="text-primary">Sign up</span>{" "}
+                <a
+                  href="/auth/register"
+                  class="font-semibold text-primary hover:text-indigo-500">
+                  Sign up{" "}
+                </a>
               </p>
             </form>
           </div>
@@ -210,7 +185,6 @@ export default function SignupPage() {
           </div>
         </div>
       </div>
-      {/* <Footer /> */}
     </div>
   );
 }

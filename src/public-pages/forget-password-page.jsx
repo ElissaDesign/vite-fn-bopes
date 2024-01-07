@@ -1,47 +1,53 @@
 import { useState } from "react";
 import { Icon } from "@iconify/react";
-import { useUserLoginMutation } from "../redux/api/apiSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { loginFail, loginSuccess } from "../redux/slices/loginSlice";
-import { errorToast } from "../hooks/toast-messages";
+import { errorToast, successToast } from "../hooks/toast-messages";
 import Navbar from "../components/navBar";
-import { BsFillEnvelopeAtFill } from "react-icons/bs";
 import AnalyisImage from "../assets/undraw_real_time_analytics_re_yliv.svg";
-import Footer from "../components/commom/MainFooter";
+import axios from "axios";
+import { Spinner } from "@chakra-ui/react";
 
 export default function ForgotPasswordPage() {
-  const [show, setShow] = useState(false);
-  const handleClick = () => setShow(!show);
-
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const [userLogin, { isLoading }] = useUserLoginMutation();
-
-  const loginData = useSelector((state) => state.login);
+  const BACKEND_URL = import.meta.env.VITE_REACT_APP_BACKEND_URL;
+  const [isLoading, setIsLoading] = useState(false);
 
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
 
-  const onSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    try {
-      const newdata = await userLogin({
-        email,
-        password,
-      }).unwrap();
-      console.log(email);
+    setIsLoading(true);
+    const data = JSON.stringify({
+      email: email,
+    });
 
-      localStorage.setItem("role", newdata.data.user.role);
-      localStorage.setItem("auth_token", newdata.data.token);
-      dispatch(loginSuccess({ ...newdata }));
-      navigate("/dashboard");
-    } catch (error) {
-      dispatch(loginFail({ ...error }));
-      errorToast(
-        (loginData?.error && `${error.data.message}`) || "server error"
-      );
-    }
+    var config = {
+      method: "post",
+      url: `${BACKEND_URL}/auth/forgot-password`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: data,
+    };
+
+    axios(config)
+      .then(function (response) {
+        const res = response.data;
+        if (res.success === true) {
+          setIsLoading(false);
+          successToast(res.message);
+
+          setTimeout(() => {
+            navigate("/auth/login");
+          }, 2000);
+        } else {
+          setIsLoading(false);
+          errorToast(`${res.message}`);
+        }
+      })
+      .catch(function (error) {
+        setIsLoading(false);
+
+        console.log(error.response);
+      });
   };
 
   return (
@@ -60,7 +66,12 @@ export default function ForgotPasswordPage() {
             No problem, it happens. What’s the email address for your account?
           </p>
           <div>
-            <form class="space-y-6" action="#" method="POST" className="mt-6">
+            <form
+              class="space-y-6"
+              action="#"
+              method="POST"
+              className="mt-6"
+              onSubmit={handleSubmit}>
               <div className="my-4">
                 <label
                   for="email"
@@ -73,7 +84,9 @@ export default function ForgotPasswordPage() {
                     name="email"
                     type="email"
                     placeholder="email"
+                    value={email}
                     autocomplete="email"
+                    onChange={(e) => setEmail(e.target.value)}
                     required
                     class="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 focus:outline-none"
                   />
@@ -84,7 +97,7 @@ export default function ForgotPasswordPage() {
                 <button
                   type="submit"
                   class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold  leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                  Send password reset email
+                  {isLoading ? <Spinner /> : ` Send password reset email`}
                 </button>
               </div>
             </form>

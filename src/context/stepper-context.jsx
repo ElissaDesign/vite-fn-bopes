@@ -1,12 +1,17 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable react-refresh/only-export-components */
-import { createContext, useContext, useState } from "react";
+import { useDispatch } from "react-redux";
+import { startup } from "../redux/slices/startupSlice";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const StepperContext = createContext({ userData: "", setUserData: null });
 
 export function UseContextProvider({ children }) {
+  const dispatch = useDispatch();
+
   const [userData, setUserData] = useState("");
-  console.log(userData);
+
+  useEffect(() => {
+    dispatch(startup({ ...userData }));
+  }, [dispatch, userData]);
 
   return (
     <StepperContext.Provider value={{ userData, setUserData }}>

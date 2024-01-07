@@ -1,12 +1,11 @@
 import { useState } from "react";
-import Stepper from "../components/stepper";
 import StepperControl from "../components/stepper-control";
 import { UseContextProvider } from "../context/stepper-context";
-
 import Account from "../components/steps/account";
 import Details from "../components/steps/details";
 import Company from "../components/steps/company";
 import Final from "../components/steps/final";
+import Stepper from "../components/stepper.jsx";
 
 export default function Startup() {
   const [currentStep, setCurrentStep] = useState(1);
