@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 
-const Stepper = ({ steps, currentStep }) => {
+export default function Stepper({ steps, currentStep }) {
   const [newStep, setNewStep] = useState([]);
   const stepsRef = useRef();
 
@@ -105,5 +105,4 @@ const Stepper = ({ steps, currentStep }) => {
       {stepsDisplay}
     </div>
   );
-};
-export default Stepper;
+}
