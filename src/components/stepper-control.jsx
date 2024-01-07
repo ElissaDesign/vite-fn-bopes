@@ -6,7 +6,6 @@ export default function StepperControl({
   steps,
   isLoading,
 }) {
-  console.log("IsLoading: ", isLoading);
   return (
     <div className="container mt-4 mb-8 flex justify-around">
       <button
