@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Stepper from "../components/Stepper";
 import StepperControl from "../components/stepper-control";
 import { UseContextProvider } from "../context/stepper-context";
 import { useSelector } from "react-redux";
@@ -10,6 +9,7 @@ import Company from "../components/steps/Company";
 import Final from "../components/steps/Final";
 import { errorToast, successToast } from "../hooks/toast-messages";
 import Navbar from "../components/navBar";
+import Stepper from "../components/stepper.jsx";
 
 function Startup() {
   const userData = useSelector((state) => state.startup.startup);
